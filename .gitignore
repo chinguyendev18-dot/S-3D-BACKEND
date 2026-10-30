@@ -7,3 +7,34 @@ coverage/
 .env.*
 !.env.example
 .DS_Store
+
+# ---- S-3D: bí mật và dữ liệu riêng — không bao giờ đẩy lên GitHub
+# Khoá, mật khẩu chỉ ở .env (trên máy) hoặc biến môi trường của server.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+# File khoá Firebase / Google
+*-adminsdk-*.json
+*service-account*.json
+*serviceAccount*.json
+credentials*.json
+google-services.json
+GoogleService-Info.plist
+secrets/
+.secrets/
+*.secret
+*.secrets
+# Token đăng nhập npm / yarn
+.npmrc
+.yarnrc
+# Dữ liệu khách hàng, đơn hàng, nhân viên lưu trên máy; log
+.data/
+*.log
