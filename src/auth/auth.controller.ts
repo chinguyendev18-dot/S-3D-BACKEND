@@ -1,0 +1,158 @@
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  ParseEnumPipe,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
+import type { Request } from 'express';
+
+import type { AuthUser } from '../access/auth-user';
+import { AccessToken, CurrentUser, Public } from '../access/decorators';
+import { requestMeta } from '../common/request-meta';
+import { AuthService } from './auth.service';
+import { OAuthService } from './oauth.service';
+import {
+  ChangePasswordDto,
+  EmailDto,
+  LoginDto,
+  OAuthExchangeDto,
+  OAuthStartDto,
+  RefreshDto,
+  RegisterDto,
+  ResendOtpDto,
+  ResetPasswordDto,
+  SocialDto,
+  UpdateProfileDto,
+  VerifyEmailDto,
+} from './dto/auth.dto';
+
+enum SocialProvider {
+  apple = 'apple',
+  google = 'google',
+}
+
+/**
+ * Sign-in for every app. The web apps call these from their own server (which keeps the tokens
+ * in HttpOnly cookies); the mobile app calls them directly and keeps the tokens in SecureStore.
+ */
+@Controller('auth')
+export class AuthController {
+  constructor(
+    private readonly auth: AuthService,
+    private readonly oauth: OAuthService,
+  ) {}
+
+  @Public()
+  @Post('login')
+  @HttpCode(200)
+  login(@Body() dto: LoginDto, @Req() request: Request) {
+    return this.auth.login(dto, requestMeta(request));
+  }
+
+  @Public()
+  @Post('register')
+  register(@Body() dto: RegisterDto, @Req() request: Request) {
+    return this.auth.register(dto, requestMeta(request));
+  }
+
+  @Public()
+  @Post('verify-email')
+  @HttpCode(200)
+  verifyEmail(@Body() dto: VerifyEmailDto, @Req() request: Request) {
+    return this.auth.verifyEmail(dto, requestMeta(request));
+  }
+
+  @Public()
+  @Post('resend-otp')
+  @HttpCode(200)
+  resendOtp(@Body() dto: ResendOtpDto) {
+    return this.auth.resendOtp(dto);
+  }
+
+  @Public()
+  @Post(['send-reset-password', 'forgot-password'])
+  @HttpCode(200)
+  sendResetPassword(@Body() dto: EmailDto) {
+    return this.auth.sendResetPassword(dto);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @HttpCode(200)
+  resetPassword(@Body() dto: ResetPasswordDto, @Req() request: Request) {
+    return this.auth.resetPassword(dto, requestMeta(request));
+  }
+
+  @Public()
+  @Post('refresh')
+  @HttpCode(200)
+  refresh(@Body() dto: RefreshDto, @Req() request: Request) {
+    return this.auth.refresh(dto, requestMeta(request));
+  }
+
+  /** Public so an expired session can still sign out; a valid token also ends it at Supabase. */
+  @Public()
+  @Post('logout')
+  @HttpCode(200)
+  logout(
+    @CurrentUser() user: AuthUser | undefined,
+    @AccessToken() token: string | undefined,
+    @Req() request: Request,
+  ) {
+    return this.auth.logout(user, token, requestMeta(request));
+  }
+
+  @Get('session')
+  session(@CurrentUser() user: AuthUser) {
+    return { user };
+  }
+
+  @Patch('profile')
+  updateProfile(@CurrentUser() user: AuthUser, @Body() dto: UpdateProfileDto) {
+    return this.auth.updateProfile(user, dto);
+  }
+
+  @Post('change-password')
+  @HttpCode(200)
+  changePassword(
+    @CurrentUser() user: AuthUser,
+    @AccessToken() token: string,
+    @Body() dto: ChangePasswordDto,
+    @Req() request: Request,
+  ) {
+    return this.auth.changePassword(user, dto, token, requestMeta(request));
+  }
+
+  /** Google / Apple: the provider's sign-in page, and the code verifier to keep until the end. */
+  @Public()
+  @Post('oauth/start')
+  @HttpCode(200)
+  oauthStart(@Body() dto: OAuthStartDto, @Req() request: Request) {
+    return this.oauth.start(dto, requestMeta(request));
+  }
+
+  /** Back from Google / Apple: the code and the kept verifier become a session. */
+  @Public()
+  @Post('oauth/exchange')
+  @HttpCode(200)
+  oauthExchange(@Body() dto: OAuthExchangeDto, @Req() request: Request) {
+    return this.oauth.exchange(dto, requestMeta(request));
+  }
+
+  @Public()
+  @Post(':provider')
+  @HttpCode(200)
+  social(
+    @Param('provider', new ParseEnumPipe(SocialProvider))
+    provider: SocialProvider,
+    @Body() dto: SocialDto,
+    @Req() request: Request,
+  ) {
+    return this.auth.social(provider, dto, requestMeta(request));
+  }
+}

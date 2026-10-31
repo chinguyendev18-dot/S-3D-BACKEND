@@ -38,3 +38,6 @@ secrets/
 # Dữ liệu khách hàng, đơn hàng, nhân viên lưu trên máy; log
 .data/
 *.log
+
+# Prisma Client, made by `prisma generate` (npm install runs it)
+src/generated/

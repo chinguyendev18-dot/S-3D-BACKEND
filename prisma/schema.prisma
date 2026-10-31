@@ -1,0 +1,103 @@
+// S-3D database (Supabase Postgres). Sign-in itself is Supabase Auth (auth.users);
+// these tables hold what the apps add on top: profile, role, permissions, staff details, audit.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// A shop customer, or a member of staff (admin site or workshop).
+enum UserKind {
+  customer
+  staff
+}
+
+/// The app a role is for: its permissions all come from that app's list.
+enum RoleScope {
+  admin
+  workshop
+}
+
+enum AuditResult {
+  success
+  failed
+  denied
+}
+
+/// One row per Supabase Auth user, same id as auth.users.
+model User {
+  id          String           @id @db.Uuid
+  email       String           @unique
+  name        String
+  phone       String           @default("")
+  avatarUrl   String           @default("") @map("avatar_url")
+  kind        UserKind         @default(customer)
+  active      Boolean          @default(true)
+  roleId      String?          @map("role_id") @db.Uuid
+  role        Role?            @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  lastLoginAt DateTime?        @map("last_login_at") @db.Timestamptz(3)
+  createdAt   DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  workshop    WorkshopProfile?
+
+  @@index([roleId])
+  @@index([kind])
+  @@map("users")
+}
+
+model Role {
+  id          String    @id @default(uuid()) @db.Uuid
+  /// Stable name used by code and seeds (super_admin, workshop_lead...).
+  key         String    @unique
+  name        String
+  description String    @default("")
+  scope       RoleScope
+  permissions String[]
+  /// Built-in roles cannot be deleted; super_admin cannot be changed at all.
+  system      Boolean   @default(false)
+  sortOrder   Int       @default(0) @map("sort_order")
+  users       User[]
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("roles")
+}
+
+/// What the workshop keeps about its staff besides the account.
+model WorkshopProfile {
+  userId   String   @id @map("user_id") @db.Uuid
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shift    String   @default("Ca hành chính")
+  skills   String[]
+  joinedAt DateTime @default(now()) @map("joined_at") @db.Date
+  note     String   @default("")
+
+  @@map("workshop_profiles")
+}
+
+/// Sign-ins, account and role changes: who did what to whom, and from where.
+model AuditLog {
+  id          String      @id @default(uuid()) @db.Uuid
+  at          DateTime    @default(now()) @db.Timestamptz(3)
+  action      String
+  result      AuditResult @default(success)
+  summary     String
+  actorId     String?     @map("actor_id") @db.Uuid
+  actorEmail  String?     @map("actor_email")
+  actorName   String?     @map("actor_name")
+  targetType  String?     @map("target_type")
+  targetId    String?     @map("target_id")
+  targetLabel String?     @map("target_label")
+  changes     Json?
+  ip          String?
+  userAgent   String?     @map("user_agent")
+
+  @@index([at])
+  @@index([actorId])
+  @@index([targetId])
+  @@map("audit_logs")
+}

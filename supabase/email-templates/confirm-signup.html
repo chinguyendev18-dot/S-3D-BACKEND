@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Mã xác nhận S-3D</title>
+  </head>
+  <body style="margin:0;padding:0;background:#F4F6F8;">
+    <!-- The line mail apps show beside the subject. -->
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+      Mã xác nhận tài khoản S-3D của bạn là {{ .Token }}
+    </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F4F6F8;">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;background:#FFFFFF;border:1px solid #E5E9EF;border-radius:18px;">
+            <tr>
+              <td style="background:#101827;border-radius:18px 18px 0 0;padding:22px 28px;font-family:Arial,Helvetica,sans-serif;">
+                <span style="font-size:22px;font-weight:800;color:#C7FF61;letter-spacing:0.5px;">S-3D</span>
+                <span style="font-size:13px;color:#B8C0CB;padding-left:8px;">In 3D theo ý bạn</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px 28px 8px;font-family:Arial,Helvetica,sans-serif;color:#101827;">
+                <h1 style="margin:0 0 12px;font-size:22px;line-height:30px;font-weight:800;color:#101827;">Xác nhận email của bạn</h1>
+                <p style="margin:0;font-size:15px;line-height:24px;color:#242F42;">
+                  Cảm ơn bạn đã đăng ký S-3D. Nhập mã dưới đây ở trang đăng ký để hoàn tất tạo tài khoản.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style="padding:24px 28px;">
+                <div style="display:inline-block;background:#F0FFD1;border:1px solid #D6FF8B;border-radius:14px;padding:16px 26px;font-family:'Courier New',Courier,monospace;font-size:34px;line-height:40px;font-weight:700;letter-spacing:10px;color:#101827;">{{ .Token }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 28px 28px;font-family:Arial,Helvetica,sans-serif;">
+                <p style="margin:0 0 8px;font-size:13px;line-height:20px;color:#4B5563;">
+                  Mã chỉ dùng được một lần và hết hạn sau 1 giờ. Đừng gửi mã này cho bất kỳ ai, kể cả nhân viên S-3D.
+                </p>
+                <p style="margin:0;font-size:13px;line-height:20px;color:#4B5563;">
+                  Nếu bạn không đăng ký tài khoản S-3D, hãy bỏ qua email này.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="background:#F8FAFC;border-top:1px solid #E5E9EF;border-radius:0 0 18px 18px;padding:16px 28px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6B7280;">
+                S-3D · Xưởng in 3D · Email tự động, vui lòng không trả lời.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
