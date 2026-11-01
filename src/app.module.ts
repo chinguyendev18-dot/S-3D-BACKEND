@@ -13,8 +13,11 @@ import { HttpExceptionFilter } from './common/http-exception.filter';
 import { ResponseInterceptor } from './common/response.interceptor';
 import { createValidationPipe } from './common/validation';
 import { PrismaModule } from './prisma/prisma.module';
+import { RealtimeModule } from './realtime/realtime.module';
 import { RolesModule } from './roles/roles.module';
+import { StorageModule } from './storage/storage.module';
 import { SupabaseModule } from './supabase/supabase.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -29,6 +32,9 @@ import { SupabaseModule } from './supabase/supabase.module';
     AuthModule,
     RolesModule,
     AccountsModule,
+    StorageModule,
+    UploadsModule,
+    RealtimeModule,
   ],
   controllers: [AppController],
   providers: [

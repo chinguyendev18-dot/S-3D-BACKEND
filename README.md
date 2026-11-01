@@ -13,11 +13,11 @@ Backend API dùng chung cho bốn ứng dụng trong hệ thống S-3D:
 npm install            # cài thư viện + sinh Prisma Client
 copy .env.example .env # rồi điền khoá Supabase / R2 / Firebase
 npm run db:migrate     # tạo bảng (users, roles, workshop_profiles, audit_logs)
-npm run db:seed        # vai trò mặc định + tài khoản mẫu
+npm run db:seed        # vai trò mặc định + tài khoản mẫu (một bước: npm run db:seed -- --only=roles)
 npm run start:dev
 ```
 
-API mặc định: `http://localhost:4000/api/v1`. Kiểm tra: `GET /api/v1/health`.
+API mặc định: `http://localhost:4000/api/v1`. Kiểm tra: `GET /api/v1/health`. Tài liệu API: `http://localhost:4000/api/v1/docs`.
 
 ## Đăng nhập & phân quyền
 
@@ -52,3 +52,36 @@ Web gọi `POST /auth/oauth/start` rồi `/auth/oauth/exchange` (qua `S-3D-FRONT
 
 Đăng ký / quên mật khẩu gửi mã 6 số qua email của Supabase: dán mẫu trong `supabase/email-templates/`
 (Confirm signup, Reset password) vào Supabase → Authentication → Emails → Templates, và cấu hình SMTP riêng (đã làm với Gmail).
+
+## Tài liệu API và kiểu dữ liệu cho các app
+
+- `/api/v1/docs`: Swagger UI (mỗi route ghi rõ cần quyền gì). `/api/v1/docs-json`: bản JSON.
+- `npm run openapi` ghi `openapi.json` ở thư mục này. Các app sinh type từ file đó: `yarn api:types` (ở Admin, Web, Xưởng, App)
+  → `src/types/backend-api.d.ts`; dùng qua `src/types/backend.ts`:
+  `BackendData<"/auth/session", "get">`, `BackendBody<"/uploads", "post">`, `BackendSchema<"AuthUserDto">`.
+
+## Upload file (Cloudflare R2)
+
+1. App gọi `POST /uploads` `{ purpose, fileName, contentType, size }` → nhận `uploadUrl` (10 phút), `key`, `publicUrl`.
+2. App `PUT` file thẳng lên `uploadUrl` với đúng `Content-Type`; R2 từ chối nếu khác kiểu hoặc khác dung lượng đã khai.
+3. App gửi `key` kèm dữ liệu (ảnh sản phẩm, ảnh đổi trả…). File riêng tư mở bằng `GET /uploads/download?key=` (chủ file và nhân viên).
+
+Loại file, ai được tải, dung lượng tối đa: `src/uploads/upload-purposes.ts`.
+
+Hai bucket, vì R2 mở công khai cả bucket một lúc: `R2_PUBLIC_BUCKET` (`s3d-public`, bật Public Development URL hoặc Custom Domain,
+link đặt vào `R2_PUBLIC_URL`) cho ảnh sản phẩm, blog, avatar; `R2_BUCKET` (`s3d-files`, **không bao giờ bật public**) cho mô hình,
+file in, ảnh đổi trả. API token phải có quyền Object Read & Write trên cả hai. Cả hai bucket cần CORS cho phép `PUT` từ các trang web
+(Settings → CORS policy). Khi chưa có `R2_PUBLIC_URL`, ảnh public đi qua `GET /api/v1/files/<key>` của backend.
+
+## Realtime (socket.io)
+
+Namespace `/realtime` trên cùng cổng với API. Trình duyệt không giữ access token, nên server web lấy **vé** một lần dùng, sống 60 giây:
+Web `GET /api/realtime/token`, Admin `POST /api/realtime/ticket`, Xưởng `GET /api/realtime/token`; App gọi thẳng `POST /realtime/ticket`.
+Mở socket: `io("<backend>/realtime", { auth: { token } })`. Sự kiện: `src/realtime/realtime.events.ts`.
+Chạy nhiều server backend thì đặt `REALTIME_SECRET` giống nhau và thêm Redis adapter cho socket.io.
+
+## Dữ liệu demo dùng chung (`prisma/seed-data/`)
+
+Danh mục, sản phẩm (37) + thông số in, vật liệu, màu nhựa, cách tính giá, blog, chính sách, FAQ, mẫu thiết kế, vùng vận chuyển,
+34 tỉnh thành, mã giảm giá và ảnh sản phẩm, gom từ dữ liệu giả của Web, Admin, App (31/10/2026). Mỗi module của giai đoạn 2–3 thêm một
+bước vào `prisma/seed.ts` đọc phần của mình từ đây, để 3 app thấy cùng một bộ dữ liệu.

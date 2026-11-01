@@ -1,0 +1,1708 @@
+{
+  "categories": [
+    {
+      "description": "Bình hoa, chậu cây và đồ decor in 3D",
+      "id": "cat-decor",
+      "name": "Đồ trang trí",
+      "slug": "do-trang-tri",
+      "sortOrder": 1
+    },
+    {
+      "description": "Khắc tên, ảnh và logo theo yêu cầu",
+      "id": "cat-gift",
+      "name": "Quà tặng cá nhân hoá",
+      "slug": "qua-tang-ca-nhan-hoa",
+      "sortOrder": 2
+    },
+    {
+      "description": "Figure resin, mô hình kiến trúc và sa bàn",
+      "id": "cat-figure",
+      "name": "Mô hình & Figure",
+      "slug": "mo-hinh-figure",
+      "sortOrder": 3
+    },
+    {
+      "description": "Giá đỡ, hộp bút và đồ tiện ích",
+      "id": "cat-desk",
+      "name": "Phụ kiện bàn làm việc",
+      "slug": "phu-kien-ban-lam-viec",
+      "sortOrder": 4
+    },
+    {
+      "description": "Bánh răng, vỏ hộp mạch, chi tiết cơ khí",
+      "id": "cat-tech",
+      "name": "Linh kiện kỹ thuật",
+      "slug": "linh-kien-ky-thuat",
+      "sortOrder": 5
+    },
+    {
+      "description": "Logo nổi, biển tên cho cửa hàng và văn phòng",
+      "id": "cat-sign",
+      "name": "Biển hiệu & Logo",
+      "slug": "bien-hieu-logo",
+      "sortOrder": 6
+    }
+  ],
+  "filaments": [
+    {
+      "hex": "#F7F4EE",
+      "id": "trang",
+      "materials": [
+        "PLA",
+        "PETG",
+        "RESIN"
+      ],
+      "name": "Trắng sứ",
+      "sortOrder": 1
+    },
+    {
+      "hex": "#1F2937",
+      "id": "den",
+      "materials": [
+        "PLA",
+        "PETG",
+        "RESIN"
+      ],
+      "name": "Đen nhám",
+      "sortOrder": 2
+    },
+    {
+      "hex": "#DA251D",
+      "id": "do",
+      "materials": [
+        "PLA",
+        "PETG"
+      ],
+      "name": "Đỏ cờ",
+      "sortOrder": 3
+    },
+    {
+      "hex": "#F8C44F",
+      "id": "vang",
+      "materials": [
+        "PLA",
+        "PETG"
+      ],
+      "name": "Vàng nghệ",
+      "sortOrder": 4
+    },
+    {
+      "hex": "#F4A7B9",
+      "id": "hong",
+      "materials": [
+        "PLA"
+      ],
+      "name": "Hồng pastel",
+      "sortOrder": 5
+    },
+    {
+      "hex": "#7CC4A4",
+      "id": "xanh-mint",
+      "materials": [
+        "PLA",
+        "PETG"
+      ],
+      "name": "Xanh mint",
+      "sortOrder": 6
+    },
+    {
+      "hex": "#9AA5A0",
+      "id": "bac",
+      "materials": [
+        "PLA",
+        "RESIN"
+      ],
+      "name": "Bạc ánh kim",
+      "sortOrder": 7
+    },
+    {
+      "hex": "#DCEFF5",
+      "id": "trong",
+      "materials": [
+        "PETG",
+        "RESIN"
+      ],
+      "name": "Trong suốt",
+      "sortOrder": 8
+    }
+  ],
+  "materials": [
+    {
+      "density": 1.27,
+      "fill": 0.38,
+      "gramsPerHour": 11,
+      "id": "PETG",
+      "label": "PETG",
+      "pricePerGram": 1100
+    },
+    {
+      "density": 1.24,
+      "fill": 0.35,
+      "gramsPerHour": 13,
+      "id": "PLA",
+      "label": "PLA",
+      "pricePerGram": 900
+    },
+    {
+      "density": 1.12,
+      "fill": 0.55,
+      "gramsPerHour": 22,
+      "id": "RESIN",
+      "label": "Resin",
+      "pricePerGram": 2400
+    }
+  ],
+  "pricing": {
+    "extraColorFee": 15000,
+    "machineRatePerHour": 15000,
+    "maxHeightMm": 250,
+    "maxPrintColors": 4,
+    "minHeightMm": 20,
+    "setupFee": 20000
+  },
+  "printAreas": [
+    {
+      "code": "BED_220",
+      "heightCm": 22,
+      "id": "area-standard",
+      "isActive": true,
+      "name": "Bàn in tiêu chuẩn",
+      "widthCm": 22
+    },
+    {
+      "code": "BED_350",
+      "heightCm": 35,
+      "id": "area-large",
+      "isActive": true,
+      "name": "Bàn in khổ lớn",
+      "widthCm": 35
+    },
+    {
+      "code": "RESIN_8K",
+      "heightCm": 13,
+      "id": "area-resin",
+      "isActive": true,
+      "name": "Khay resin",
+      "widthCm": 22
+    }
+  ],
+  "products": [
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 9,
+      "description": "Khung ảnh đôi hình trái tim, in tên hoặc chữ theo yêu cầu",
+      "id": "prd-101",
+      "image": "khung-anh-love.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Khung ảnh trái tim \"Love\"",
+      "oldPrice": 299000,
+      "price": 259000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 299000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 259000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 150,
+            "y": 140,
+            "z": 40
+          },
+          "volume": 294000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-101",
+      "slug": "khung-anh-trai-tim-love",
+      "sortOrder": 1,
+      "stock": 80
+    },
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 8,
+      "description": "Đèn LED ấm, mèo ngủ trên vầng trăng low-poly",
+      "id": "prd-102",
+      "image": "den-meo-om-trang.webp",
+      "isActive": true,
+      "material": "PLA trắng",
+      "name": "Đèn ngủ mèo ôm trăng",
+      "oldPrice": 339000,
+      "price": 289000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 339000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 289000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 160,
+            "z": 70
+          },
+          "volume": 510720
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-102",
+      "slug": "den-ngu-meo-om-trang",
+      "sortOrder": 2,
+      "stock": 46
+    },
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 8,
+      "description": "Khủng long xanh ôm điện thoại, khắc tên bé lên đế",
+      "id": "prd-103",
+      "image": "gia-do-khung-long.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Giá đỡ điện thoại khủng long khắc tên",
+      "oldPrice": null,
+      "price": 159000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 159000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 110,
+            "y": 100,
+            "z": 70
+          },
+          "volume": 308000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-103",
+      "slug": "gia-do-dien-thoai-khung-long-khac-ten",
+      "sortOrder": 3,
+      "stock": 120
+    },
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 7,
+      "description": "Hộp tròn 3 ngăn, nắp hoa anh đào nổi khắc tên",
+      "id": "prd-104",
+      "image": "hop-trang-suc-hoa.webp",
+      "isActive": true,
+      "material": "PLA Silk",
+      "name": "Hộp trang sức hoa anh đào",
+      "oldPrice": null,
+      "price": 199000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 199000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 100,
+            "y": 50,
+            "z": 100
+          },
+          "volume": 275000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-104",
+      "slug": "hop-trang-suc-hoa-anh-dao",
+      "sortOrder": 4,
+      "stock": 60
+    },
+    {
+      "categoryId": "cat-sign",
+      "createdDaysAgo": 7,
+      "description": "Logo thương hiệu nổi trên đế tròn, có đèn LED viền",
+      "id": "prd-105",
+      "image": "logo-la-khoi.webp",
+      "isActive": true,
+      "material": "PLA + LED",
+      "name": "Logo lá & khối 3D để bàn",
+      "oldPrice": null,
+      "price": 390000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 390000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 160,
+            "y": 180,
+            "z": 160
+          },
+          "volume": 1382400
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-SG-105",
+      "slug": "logo-la-khoi-3d-de-ban",
+      "sortOrder": 5,
+      "stock": 20
+    },
+    {
+      "categoryId": "cat-sign",
+      "createdDaysAgo": 6,
+      "description": "Logo lục giác hai màu xanh, in ghép, đế đứng",
+      "id": "prd-106",
+      "image": "logo-luc-giac.webp",
+      "isActive": true,
+      "material": "PLA 2 màu",
+      "name": "Logo lục giác lá xanh",
+      "oldPrice": 480000,
+      "price": 420000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 480000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 420000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 180,
+            "y": 200,
+            "z": 80
+          },
+          "volume": 921600
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-SG-106",
+      "slug": "logo-luc-giac-la-xanh",
+      "sortOrder": 6,
+      "stock": 18
+    },
+    {
+      "categoryId": "cat-sign",
+      "createdDaysAgo": 6,
+      "description": "Logo khối có đèn LED dưới đế, đặt quầy lễ tân",
+      "id": "prd-107",
+      "image": "logo-den-led.webp",
+      "isActive": true,
+      "material": "PLA + LED",
+      "name": "Logo đèn LED để bàn",
+      "oldPrice": null,
+      "price": 490000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 490000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 170,
+            "y": 190,
+            "z": 170
+          },
+          "volume": 1647300
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-SG-107",
+      "slug": "logo-den-led-de-ban",
+      "sortOrder": 7,
+      "stock": 12
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 5,
+      "description": "Rồng đỏ chibi cao 10 cm, sơn tay chi tiết",
+      "id": "prd-108",
+      "image": "rong-con.webp",
+      "isActive": true,
+      "material": "Resin 8K",
+      "name": "Rồng con chibi",
+      "oldPrice": 329000,
+      "price": 289000,
+      "print": {
+        "defaultMaterial": "RESIN",
+        "materials": [
+          "RESIN"
+        ],
+        "colors": [],
+        "comparePrice": 329000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 289000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 110,
+            "y": 100,
+            "z": 90
+          },
+          "volume": 396000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-108",
+      "slug": "rong-con-chibi",
+      "sortOrder": 8,
+      "stock": 30
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 5,
+      "description": "Figure nhân vật cầm trượng, độ chi tiết resin 8K",
+      "id": "prd-109",
+      "image": "phap-su.webp",
+      "isActive": true,
+      "material": "Resin 8K",
+      "name": "Figure pháp sư phiêu lưu",
+      "oldPrice": null,
+      "price": 359000,
+      "print": {
+        "defaultMaterial": "RESIN",
+        "materials": [
+          "RESIN"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 359000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 70,
+            "y": 150,
+            "z": 60
+          },
+          "volume": 189000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-109",
+      "slug": "figure-phap-su-phieu-luu",
+      "sortOrder": 9,
+      "stock": 22
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 4,
+      "description": "Robot trắng mắt LED xanh, tay chân xoay được",
+      "id": "prd-110",
+      "image": "robot-mat-cuoi.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Robot mini mặt cười",
+      "oldPrice": 259000,
+      "price": 229000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 259000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 229000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 80,
+            "y": 110,
+            "z": 70
+          },
+          "volume": 277200
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-110",
+      "slug": "robot-mini-mat-cuoi",
+      "sortOrder": 10,
+      "stock": 55
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 4,
+      "description": "Tượng hiệp sĩ cầm kiếm và khiên trên đế đá",
+      "id": "prd-111",
+      "image": "hiep-si.webp",
+      "isActive": true,
+      "material": "Resin 8K",
+      "name": "Hiệp sĩ chiến binh",
+      "oldPrice": null,
+      "price": 399000,
+      "print": {
+        "defaultMaterial": "RESIN",
+        "materials": [
+          "RESIN"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 399000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 100,
+            "y": 160,
+            "z": 80
+          },
+          "volume": 358400.00000000006
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-111",
+      "slug": "hiep-si-chien-binh",
+      "sortOrder": 11,
+      "stock": 16
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 4,
+      "description": "Phi hành gia trắng cao 12 cm, kính mũ đen bóng",
+      "id": "prd-112",
+      "image": "phi-hanh-gia.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Phi hành gia mini",
+      "oldPrice": null,
+      "price": 219000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 219000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 70,
+            "y": 120,
+            "z": 60
+          },
+          "volume": 211680
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-112",
+      "slug": "phi-hanh-gia-mini",
+      "sortOrder": 12,
+      "stock": 70
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 3,
+      "description": "Hộp bút 3 ngăn cao thấp, đựng kéo, bút, băng keo",
+      "id": "prd-113",
+      "image": "hop-but-da-ngan.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Hộp đựng bút đa ngăn",
+      "oldPrice": null,
+      "price": 129000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 129000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 140,
+            "y": 90,
+            "z": 90
+          },
+          "volume": 510300
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-113",
+      "slug": "hop-dung-but-da-ngan",
+      "sortOrder": 13,
+      "stock": 140
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 3,
+      "description": "Giá kê laptop nghiêng 15°, gập phẳng, chịu lực",
+      "id": "prd-114",
+      "image": "gia-laptop.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Giá đỡ laptop gấp gọn",
+      "oldPrice": 289000,
+      "price": 249000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": 289000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 249000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 260,
+            "y": 90,
+            "z": 220
+          },
+          "volume": 617760
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-114",
+      "slug": "gia-do-laptop-gap-gon",
+      "sortOrder": 14,
+      "stock": 60
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 2,
+      "description": "Đế đứng cho sạc không dây MagSafe, đi dây gọn",
+      "id": "prd-115",
+      "image": "de-sac-dung.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Đế sạc điện thoại đứng",
+      "oldPrice": null,
+      "price": 189000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 189000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 80,
+            "y": 130,
+            "z": 90
+          },
+          "volume": 280800
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-115",
+      "slug": "de-sac-dien-thoai-dung",
+      "sortOrder": 15,
+      "stock": 90
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 2,
+      "description": "Hộp giấu ổ cắm và dây sạc, nắp tre, khe thoát nhiệt",
+      "id": "prd-116",
+      "image": "hop-o-dien.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Hộp giấu ổ điện nắp tre",
+      "oldPrice": null,
+      "price": 279000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 279000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 300,
+            "y": 120,
+            "z": 140
+          },
+          "volume": 1260000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-116",
+      "slug": "hop-giau-o-dien-nap-tre",
+      "sortOrder": 16,
+      "stock": 35
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 1,
+      "description": "Giá treo tai nghe chữ T, đế nặng chống đổ",
+      "id": "prd-117",
+      "image": "gia-tai-nghe.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Giá treo tai nghe",
+      "oldPrice": 199000,
+      "price": 169000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": 199000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 169000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 260,
+            "z": 120
+          },
+          "volume": 561600
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-117",
+      "slug": "gia-treo-tai-nghe",
+      "sortOrder": 17,
+      "stock": 75
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 1,
+      "description": "Chậu cây hình phi hành gia ôm trái tim, có lỗ thoát nước",
+      "id": "prd-118",
+      "image": "chau-phi-hanh-gia.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Chậu cây phi hành gia",
+      "oldPrice": null,
+      "price": 159000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 159000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 110,
+            "y": 100,
+            "z": 100
+          },
+          "volume": 440000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-118",
+      "slug": "chau-cay-phi-hanh-gia",
+      "sortOrder": 18,
+      "stock": 85
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 1,
+      "description": "Tượng hươu hình học trắng xanh, decor kệ sách",
+      "id": "prd-119",
+      "image": "tuong-huou.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Tượng hươu low-poly",
+      "oldPrice": null,
+      "price": 199000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 199000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 200,
+            "z": 60
+          },
+          "volume": 259200
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-119",
+      "slug": "tuong-huou-low-poly",
+      "sortOrder": 19,
+      "stock": 40
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 0,
+      "description": "Ngôi nhà mái xanh có đèn LED ấm bên trong",
+      "id": "prd-120",
+      "image": "den-ngoi-nha.webp",
+      "isActive": true,
+      "material": "PLA + LED",
+      "name": "Đèn ngủ ngôi nhà xanh",
+      "oldPrice": 299000,
+      "price": 259000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 299000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 259000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 130,
+            "z": 120
+          },
+          "volume": 655200
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-120",
+      "slug": "den-ngu-ngoi-nha-xanh",
+      "sortOrder": 20,
+      "stock": 50
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 0,
+      "description": "Mèo xanh ngủ trên vầng trăng và mây, đèn LED",
+      "id": "prd-121",
+      "image": "den-meo-trang.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Đèn mèo ngủ trên trăng",
+      "oldPrice": null,
+      "price": 239000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 239000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 130,
+            "y": 140,
+            "z": 80
+          },
+          "volume": 509599.99999999994
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-121",
+      "slug": "den-meo-ngu-tren-trang",
+      "sortOrder": 21,
+      "stock": 45
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 0,
+      "description": "Mèo xanh trắng ngủ cuộn tròn trên đế, chặn giấy",
+      "id": "prd-122",
+      "image": "meo-ngu.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Mèo ngủ cuộn tròn",
+      "oldPrice": null,
+      "price": 149000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 149000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 60,
+            "z": 90
+          },
+          "volume": 324000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-122",
+      "slug": "meo-ngu-cuon-tron",
+      "sortOrder": 22,
+      "stock": 110
+    },
+    {
+      "categoryId": "cat-tech",
+      "createdDaysAgo": 12,
+      "description": "Vỏ hộp cho Arduino / ESP32, chừa lỗ USB, nguồn và khe tản nhiệt",
+      "id": "prd-123",
+      "image": "hop-o-dien.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Vỏ hộp mạch điện tử theo kích thước",
+      "oldPrice": null,
+      "price": 149000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 149000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 110,
+            "y": 45,
+            "z": 80
+          },
+          "volume": 118800
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-TC-123",
+      "slug": "vo-hop-mach-dien-tu-theo-kich-thuoc",
+      "sortOrder": 23,
+      "stock": 90
+    },
+    {
+      "categoryId": "cat-tech",
+      "createdDaysAgo": 12,
+      "description": "Khung PETG infill 40%, bắt vít M4, đỡ máy đo hoặc màn hình nhỏ",
+      "id": "prd-124",
+      "image": "gia-laptop.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Khung đỡ thiết bị chịu lực",
+      "oldPrice": 249000,
+      "price": 219000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": 249000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 219000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 220,
+            "y": 80,
+            "z": 180
+          },
+          "volume": 475200
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-TC-124",
+      "slug": "khung-do-thiet-bi-chiu-luc",
+      "sortOrder": 24,
+      "stock": 40
+    },
+    {
+      "categoryId": "cat-tech",
+      "createdDaysAgo": 11,
+      "description": "Chi tiết thay thế cho đế sạc, khớp cuộn sạc Qi 50 mm",
+      "id": "prd-125",
+      "image": "de-sac-dung.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Giá đỡ module sạc không dây",
+      "oldPrice": null,
+      "price": 99000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 99000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 80,
+            "y": 130,
+            "z": 90
+          },
+          "volume": 280800
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-TC-125",
+      "slug": "gia-do-module-sac-khong-day",
+      "sortOrder": 25,
+      "stock": 150
+    },
+    {
+      "categoryId": "cat-tech",
+      "createdDaysAgo": 11,
+      "description": "Chân đế đặc cho loa nhỏ, cảm biến hoặc micro, đáy cao su",
+      "id": "prd-126",
+      "image": "gia-tai-nghe.webp",
+      "isActive": true,
+      "material": "PETG",
+      "name": "Chân đế chữ T chống rung",
+      "oldPrice": null,
+      "price": 129000,
+      "print": {
+        "defaultMaterial": "PETG",
+        "materials": [
+          "PETG",
+          "PLA"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 129000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 200,
+            "z": 120
+          },
+          "volume": 576000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-TC-126",
+      "slug": "chan-de-chu-t-chong-rung",
+      "sortOrder": 26,
+      "stock": 65
+    },
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 10,
+      "description": "Đèn ngủ ngôi nhà, khắc tên cả nhà và năm chuyển về nhà mới",
+      "id": "prd-127",
+      "image": "den-ngoi-nha.webp",
+      "isActive": true,
+      "material": "PLA + LED",
+      "name": "Đèn ngôi nhà khắc tên gia đình",
+      "oldPrice": 349000,
+      "price": 299000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 349000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 299000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 130,
+            "z": 120
+          },
+          "volume": 655200
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-127",
+      "slug": "den-ngoi-nha-khac-ten-gia-dinh",
+      "sortOrder": 27,
+      "stock": 38
+    },
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 10,
+      "description": "Mèo cuộn tròn trên đế khắc tên và ngày sinh, hộp quà kèm thiệp",
+      "id": "prd-128",
+      "image": "meo-ngu.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Mèo ngủ khắc tên quà sinh nhật",
+      "oldPrice": null,
+      "price": 179000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 179000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 120,
+            "y": 60,
+            "z": 90
+          },
+          "volume": 324000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-128",
+      "slug": "meo-ngu-khac-ten-qua-sinh-nhat",
+      "sortOrder": 28,
+      "stock": 95
+    },
+    {
+      "categoryId": "cat-gift",
+      "createdDaysAgo": 9,
+      "description": "Phi hành gia cầm bảng tên, màu bộ đồ theo yêu cầu",
+      "id": "prd-129",
+      "image": "phi-hanh-gia.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Figure phi hành gia khắc tên bé",
+      "oldPrice": null,
+      "price": 249000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 249000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 70,
+            "y": 120,
+            "z": 60
+          },
+          "volume": 211680
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-GF-129",
+      "slug": "figure-phi-hanh-gia-khac-ten-be",
+      "sortOrder": 29,
+      "stock": 50
+    },
+    {
+      "categoryId": "cat-sign",
+      "createdDaysAgo": 13,
+      "description": "Logo lục giác khổ 30 cm, móc treo âm tường cho sảnh văn phòng",
+      "id": "prd-130",
+      "image": "logo-luc-giac.webp",
+      "isActive": true,
+      "material": "PLA 2 màu",
+      "name": "Biển logo lục giác gắn tường",
+      "oldPrice": 790000,
+      "price": 690000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 790000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 690000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 300,
+            "y": 320,
+            "z": 25
+          },
+          "volume": 720000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-SG-130",
+      "slug": "bien-logo-luc-giac-gan-tuong",
+      "sortOrder": 30,
+      "stock": 10
+    },
+    {
+      "categoryId": "cat-sign",
+      "createdDaysAgo": 13,
+      "description": "Logo khối có đèn LED, cắm USB, đặt quầy thu ngân",
+      "id": "prd-131",
+      "image": "logo-den-led.webp",
+      "isActive": true,
+      "material": "PLA + LED",
+      "name": "Hộp đèn logo cửa hàng",
+      "oldPrice": null,
+      "price": 590000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 590000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 200,
+            "y": 210,
+            "z": 180
+          },
+          "volume": 2268000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-SG-131",
+      "slug": "hop-den-logo-cua-hang",
+      "sortOrder": 31,
+      "stock": 14
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 14,
+      "description": "Hiệp sĩ resin cao 15 cm, sơn tay nhiều lớp và phủ bóng",
+      "id": "prd-132",
+      "image": "hiep-si.webp",
+      "isActive": true,
+      "material": "Resin 8K",
+      "name": "Hiệp sĩ bản sơn tay cao cấp",
+      "oldPrice": null,
+      "price": 690000,
+      "print": {
+        "defaultMaterial": "RESIN",
+        "materials": [
+          "RESIN"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 690000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 110,
+            "y": 180,
+            "z": 90
+          },
+          "volume": 498960.00000000006
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-132",
+      "slug": "hiep-si-ban-son-tay-cao-cap",
+      "sortOrder": 32,
+      "stock": 8
+    },
+    {
+      "categoryId": "cat-figure",
+      "createdDaysAgo": 14,
+      "description": "Figure pháp sư cao 20 cm trên đế đá, chưa sơn để tự tô",
+      "id": "prd-133",
+      "image": "phap-su.webp",
+      "isActive": true,
+      "material": "Resin 8K",
+      "name": "Pháp sư cỡ lớn trưng bày",
+      "oldPrice": 520000,
+      "price": 459000,
+      "print": {
+        "defaultMaterial": "RESIN",
+        "materials": [
+          "RESIN"
+        ],
+        "colors": [],
+        "comparePrice": 520000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 459000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 90,
+            "y": 200,
+            "z": 80
+          },
+          "volume": 432000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-FG-133",
+      "slug": "phap-su-co-lon-trung-bay",
+      "sortOrder": 33,
+      "stock": 12
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 15,
+      "description": "Khay bút 2 ngăn nhỏ gọn kèm khe cắm điện thoại",
+      "id": "prd-134",
+      "image": "hop-but-da-ngan.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Khay bút mini để bàn",
+      "oldPrice": null,
+      "price": 99000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 99000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 110,
+            "y": 70,
+            "z": 70
+          },
+          "volume": 242550
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-134",
+      "slug": "khay-but-mini-de-ban",
+      "sortOrder": 34,
+      "stock": 160
+    },
+    {
+      "categoryId": "cat-desk",
+      "createdDaysAgo": 15,
+      "description": "Chậu sen đá phi hành gia cỡ nhỏ, khay hứng nước rời",
+      "id": "prd-135",
+      "image": "chau-phi-hanh-gia.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Chậu cây mini bàn làm việc",
+      "oldPrice": null,
+      "price": 119000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 119000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 80,
+            "y": 75,
+            "z": 75
+          },
+          "volume": 180000
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DK-135",
+      "slug": "chau-cay-mini-ban-lam-viec",
+      "sortOrder": 35,
+      "stock": 120
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 16,
+      "description": "Bộ 2 tượng hươu low-poly cao thấp, phối màu theo nội thất",
+      "id": "prd-136",
+      "image": "tuong-huou.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Cặp tượng hươu trang trí kệ",
+      "oldPrice": 399000,
+      "price": 349000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": 399000,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 349000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 240,
+            "y": 200,
+            "z": 60
+          },
+          "volume": 518400
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-136",
+      "slug": "cap-tuong-huou-trang-tri-ke",
+      "sortOrder": 36,
+      "stock": 25
+    },
+    {
+      "categoryId": "cat-decor",
+      "createdDaysAgo": 16,
+      "description": "Robot ngồi chặn sách, mắt LED xanh dịu, dùng pin",
+      "id": "prd-137",
+      "image": "robot-mat-cuoi.webp",
+      "isActive": true,
+      "material": "PLA",
+      "name": "Robot mặt cười trang trí kệ sách",
+      "oldPrice": null,
+      "price": 199000,
+      "print": {
+        "defaultMaterial": "PLA",
+        "materials": [
+          "PLA",
+          "PETG"
+        ],
+        "colors": [],
+        "comparePrice": null,
+        "defaultColor": "trang",
+        "defaultHeightMm": 100,
+        "fixedPrice": 199000,
+        "maxHeightMm": 200,
+        "metrics": {
+          "size": {
+            "x": 80,
+            "y": 110,
+            "z": 70
+          },
+          "volume": 277200
+        },
+        "minHeightMm": 40,
+        "priceMode": "co_dinh",
+        "upAxis": "y"
+      },
+      "sku": "S3D-DC-137",
+      "slug": "robot-mat-cuoi-trang-tri-ke-sach",
+      "sortOrder": 37,
+      "stock": 60
+    }
+  ],
+  "sizes": [
+    {
+      "code": "H5",
+      "heightMm": 50,
+      "id": "size-1",
+      "isActive": true,
+      "name": "5 cm",
+      "sortOrder": 1
+    },
+    {
+      "code": "H10",
+      "heightMm": 100,
+      "id": "size-2",
+      "isActive": true,
+      "name": "10 cm",
+      "sortOrder": 2
+    },
+    {
+      "code": "H15",
+      "heightMm": 150,
+      "id": "size-3",
+      "isActive": true,
+      "name": "15 cm",
+      "sortOrder": 3
+    },
+    {
+      "code": "H20",
+      "heightMm": 200,
+      "id": "size-4",
+      "isActive": true,
+      "name": "20 cm",
+      "sortOrder": 4
+    },
+    {
+      "code": "H30",
+      "heightMm": 300,
+      "id": "size-5",
+      "isActive": true,
+      "name": "30 cm",
+      "sortOrder": 5
+    }
+  ]
+}

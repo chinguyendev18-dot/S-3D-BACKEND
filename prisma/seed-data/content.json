@@ -1,0 +1,216 @@
+{
+  "blogCategories": [
+    {
+      "id": "blog-cat-01",
+      "name": "Kiến thức in 3D",
+      "slug": "kien-thuc-in-3d",
+      "sortOrder": 1
+    },
+    {
+      "id": "blog-cat-02",
+      "name": "Mẹo thiết kế",
+      "slug": "meo-thiet-ke",
+      "sortOrder": 2
+    },
+    {
+      "id": "blog-cat-03",
+      "name": "Câu chuyện khách hàng",
+      "slug": "cau-chuyen-khach-hang",
+      "sortOrder": 3
+    },
+    {
+      "id": "blog-cat-04",
+      "name": "Tin tức S-3D",
+      "slug": "tin-tuc-s3d",
+      "sortOrder": 4
+    }
+  ],
+  "blogPosts": [
+    {
+      "categoryId": "blog-cat-01",
+      "content": "<p>So sánh độ bền, độ chi tiết và giá thành của 3 vật liệu phổ biến.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 2,
+      "description": "So sánh độ bền, độ chi tiết và giá thành của 3 vật liệu phổ biến.",
+      "id": "post-001",
+      "image": "de-sac-dung.webp",
+      "slug": "chon-vat-lieu-in-3d",
+      "title": "PLA, PETG hay Resin: chọn vật liệu nào cho sản phẩm của bạn?"
+    },
+    {
+      "categoryId": "blog-cat-02",
+      "content": "<p>Xuất STL/3MF đúng tỷ lệ, kiểm tra độ dày thành và mặt lưới kín.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 5,
+      "description": "Xuất STL/3MF đúng tỷ lệ, kiểm tra độ dày thành và mặt lưới kín.",
+      "id": "post-002",
+      "image": "hop-o-dien.webp",
+      "slug": "chuan-bi-file-in",
+      "title": "Cách chuẩn bị file in chất lượng cao"
+    },
+    {
+      "categoryId": "blog-cat-03",
+      "content": "<p>Lithophane, móc khoá khắc tên và figure chibi.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 8,
+      "description": "Lithophane, móc khoá khắc tên và figure chibi.",
+      "id": "post-003",
+      "image": "den-meo-om-trang.webp",
+      "slug": "qua-tang-in-3d-ca-nhan-hoa",
+      "title": "5 món quà in 3D cá nhân hoá được yêu thích"
+    },
+    {
+      "categoryId": "blog-cat-01",
+      "content": "<p>Từ khi nhận đơn, in, hậu kỳ đến lúc giao hàng.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 12,
+      "description": "Từ khi nhận đơn, in, hậu kỳ đến lúc giao hàng.",
+      "id": "post-004",
+      "image": "tuong-huou.webp",
+      "slug": "quy-trinh-in-3d",
+      "title": "Quy trình in 3D tại S-3D"
+    },
+    {
+      "categoryId": "blog-cat-03",
+      "content": "<p>Dự án sa bàn nhà phố in nhiều phần, lắp ghép và sơn hoàn thiện.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 18,
+      "description": "Dự án sa bàn nhà phố in nhiều phần, lắp ghép và sơn hoàn thiện.",
+      "id": "post-005",
+      "image": "den-ngoi-nha.webp",
+      "slug": "mo-hinh-kien-truc",
+      "title": "Mô hình kiến trúc 1:100 cho văn phòng thiết kế"
+    },
+    {
+      "categoryId": "blog-cat-02",
+      "content": "<p>Chia khối, chọn hướng in và cách dán ghép bền màu.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 24,
+      "description": "Chia khối, chọn hướng in và cách dán ghép bền màu.",
+      "id": "post-006",
+      "image": "logo-luc-giac.webp",
+      "slug": "logo-3d-khong-cong-venh",
+      "title": "Thiết kế logo 3D gắn tường không bị cong vênh"
+    },
+    {
+      "categoryId": "blog-cat-03",
+      "content": "<p>Một figure resin cao 12 cm đi qua những bước nào?</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 31,
+      "description": "Một figure resin cao 12 cm đi qua những bước nào?",
+      "id": "post-007",
+      "image": "rong-con.webp",
+      "slug": "figure-chibi-tu-anh",
+      "title": "Figure chibi từ ảnh: hậu trường sơn tay"
+    },
+    {
+      "categoryId": "blog-cat-04",
+      "content": "<p>Tăng gấp đôi công suất cho đơn figure và mô hình chi tiết.</p><p>Nội dung bài viết demo về in 3D tại xưởng S-3D.</p>",
+      "createdDaysAgo": 40,
+      "description": "Tăng gấp đôi công suất cho đơn figure và mô hình chi tiết.",
+      "id": "post-008",
+      "image": "hiep-si.webp",
+      "slug": "day-chuyen-resin-8k",
+      "title": "S-3D mở thêm dây chuyền in resin 8K"
+    }
+  ],
+  "faq": [
+    {
+      "answer": "<p>Đơn thường in xong trong 1–3 ngày, cộng thêm 1–4 ngày giao hàng tuỳ khu vực.</p>",
+      "question": "Bao lâu thì nhận được hàng?",
+      "sortOrder": 1
+    },
+    {
+      "answer": "<p>Gửi ảnh hoặc bản vẽ, đội thiết kế S-3D sẽ dựng mô hình và báo giá trước khi in.</p>",
+      "question": "Tôi không có file 3D thì sao?",
+      "sortOrder": 2
+    },
+    {
+      "answer": "<p>PLA cho đồ trang trí, PETG cho chi tiết chịu lực, Resin cho figure và mô hình cần độ chi tiết cao.</p>",
+      "question": "Nên chọn vật liệu nào?",
+      "sortOrder": 3
+    },
+    {
+      "answer": "<p>Có. Từ 50 sản phẩm trở lên được giảm giá theo bậc và ưu tiên lịch in.</p>",
+      "question": "Có in số lượng lớn không?",
+      "sortOrder": 4
+    }
+  ],
+  "legalDocuments": [
+    {
+      "content": "<h2>1. Mẫu 3D do AI tạo</h2>\n<p>Studio S-3D dùng AI để dựng mẫu 3D từ mô tả, từ ảnh bạn tải lên hoặc từ file 3D có sẵn. Bạn được xem trước ảnh mẫu và mô hình trước khi đặt in; mẫu chỉ được in khi bạn xác nhận đơn hàng.</p>\n<h2>2. Nội dung được phép</h2>\n<ul>\n<li>Nhân vật, đồ trang trí, quà tặng, phụ kiện, linh kiện… do bạn sáng tạo hoặc có quyền sử dụng.</li>\n<li>Ảnh chân dung, thú cưng, đồ vật của chính bạn hoặc được người trong ảnh đồng ý.</li>\n</ul>\n<h2>3. Nội dung không được phép</h2>\n<ul>\n<li>Vũ khí hoạt động được, bộ phận vũ khí hoặc vật dụng gây nguy hiểm.</li>\n<li>Nội dung bạo lực, khiêu dâm, thù ghét, hoặc xúc phạm cá nhân, tổ chức.</li>\n<li>Sao chép logo, nhân vật, thiết kế được bảo hộ bản quyền khi bạn không có quyền sử dụng.</li>\n</ul>\n<h2>4. Quyền với mẫu đã tạo</h2>\n<p>Bạn giữ quyền với ý tưởng và ảnh gốc của mình. S-3D chỉ dùng mẫu để in đơn hàng của bạn và không bán lại cho người khác. Xưởng có quyền từ chối in những mẫu vi phạm chính sách này và hoàn tiền toàn bộ cho đơn đó.</p>\n<h2>5. Giới hạn của AI</h2>\n<p>Mô hình do AI dựng có thể khác ảnh gốc ở chi tiết nhỏ, màu sắc hoặc tỉ lệ. Với linh kiện cần đúng kích thước, hãy dùng mục <strong>Đặt theo yêu cầu</strong> để kỹ sư dựng mẫu chính xác.</p>",
+      "title": "Chính sách nội dung AI",
+      "type": "ai_content_policy"
+    },
+    {
+      "content": "<h2>1. Cookie là gì</h2>\n<p>Cookie là tệp nhỏ được lưu trên trình duyệt để trang web ghi nhớ bạn giữa các lần truy cập.</p>\n<h2>2. S-3D dùng cookie để</h2>\n<ul>\n<li><strong>Cần thiết:</strong> giữ phiên đăng nhập, giỏ hàng và bảo mật khi thanh toán.</li>\n<li><strong>Tuỳ chọn:</strong> ghi nhớ ngôn ngữ, giao diện và các mẫu bạn đang làm trong studio.</li>\n<li><strong>Thống kê:</strong> đo lượt truy cập ẩn danh để cải thiện trang (chỉ khi bạn đồng ý).</li>\n</ul>\n<h2>3. Quản lý cookie</h2>\n<p>Bạn có thể xoá hoặc chặn cookie trong cài đặt trình duyệt. Nếu chặn cookie cần thiết, một số chức năng như đăng nhập hoặc thanh toán có thể không hoạt động.</p>",
+      "title": "Chính sách cookie",
+      "type": "cookie_policy"
+    },
+    {
+      "content": "<h2>1. Thông tin chúng tôi thu thập</h2>\n<ul>\n<li>Họ tên, email, số điện thoại và địa chỉ giao hàng bạn cung cấp khi đặt hàng.</li>\n<li>Mô tả, ảnh và file 3D bạn gửi vào studio để tạo mẫu.</li>\n<li>Lịch sử đơn hàng và trạng thái thanh toán (S-3D không lưu số thẻ của bạn).</li>\n</ul>\n<h2>2. Chúng tôi dùng thông tin để</h2>\n<ul>\n<li>Tạo mẫu 3D, in, đóng gói và giao đơn hàng cho bạn.</li>\n<li>Gửi xác nhận đơn, cập nhật tiến độ sản xuất và giao hàng.</li>\n<li>Hỗ trợ khi bạn liên hệ hoặc gửi yêu cầu in riêng.</li>\n</ul>\n<h2>3. Chia sẻ thông tin</h2>\n<p>Chúng tôi chỉ chia sẻ thông tin cần thiết với đơn vị vận chuyển (tên, số điện thoại, địa chỉ) và cổng thanh toán. S-3D không bán dữ liệu của bạn cho bên thứ ba.</p>\n<h2>4. Lưu trữ & quyền của bạn</h2>\n<p>Ảnh và file bạn tải lên được lưu để bạn in lại khi cần. Bạn có thể yêu cầu xem, sửa hoặc xoá dữ liệu bất cứ lúc nào qua <strong>hello@s-3d.vn</strong>.</p>",
+      "title": "Chính sách quyền riêng tư",
+      "type": "privacy_policy"
+    },
+    {
+      "content": "<h2>1. Được in lại hoặc hoàn tiền khi</h2>\n<ul>\n<li>Sản phẩm bị vỡ, nứt hoặc biến dạng trong lúc vận chuyển.</li>\n<li>Lỗi in rõ ràng: bong lớp, thiếu lớp, nứt, cong vênh.</li>\n<li>Sai màu nhựa, sai kích thước hoặc thiếu chi tiết so với mẫu bạn đã duyệt.</li>\n<li>Giao sai hoặc thiếu sản phẩm so với đơn hàng.</li>\n</ul>\n<p>Bạn báo trong <strong>30 ngày</strong> kể từ khi nhận hàng. Bạn chọn <strong>in lại mẫu mới</strong> (xưởng in và gửi lại miễn phí) hoặc <strong>hoàn tiền</strong>.</p>\n<h2>2. Cách gửi yêu cầu</h2>\n<ol>\n<li>Vào <a href=\"/return-requests\">Đổi trả &amp; bảo hành</a> (hoặc nút <strong>Yêu cầu đổi trả</strong> trong chi tiết đơn đã giao).</li>\n<li>Chọn đơn hàng, vấn đề gặp phải và cách xử lý bạn muốn.</li>\n<li>Gửi kèm 1–4 ảnh chụp rõ chỗ lỗi; nếu vỡ khi giao, chụp cả hộp và nhãn vận chuyển.</li>\n</ol>\n<p>Xưởng xem xét và phản hồi qua email trong <strong>1–2 ngày làm việc</strong>. Có thể xưởng nhờ bạn gửi lại sản phẩm lỗi; khi đó phí gửi do S-3D chịu.</p>\n<h2>3. Không áp dụng đổi trả khi</h2>\n<ul>\n<li>Bạn đổi ý sau khi đơn đã lên máy in (mỗi món được in riêng cho bạn).</li>\n<li>Khác biệt nhỏ vốn có của in 3D: vân lớp, sai lệch kích thước trong khoảng ±0,5 mm, màu nhựa chênh nhẹ so với màn hình.</li>\n<li>Sản phẩm hỏng do dùng sai cách (để gần nguồn nhiệt, chịu lực quá mức).</li>\n<li>Quá 30 ngày kể từ khi nhận hàng.</li>\n</ul>\n<h2>4. Huỷ đơn & hoàn tiền</h2>\n<p>Bạn có thể huỷ hoặc sửa đơn miễn phí trước khi đơn lên máy in. Tiền được hoàn về <strong>đúng phương thức thanh toán ban đầu</strong> trong 3–7 ngày làm việc sau khi xưởng duyệt (ví điện tử thường nhanh hơn). Đơn COD chưa thanh toán sẽ được huỷ ngay.</p>",
+      "title": "Chính sách đổi trả & hoàn tiền",
+      "type": "return_refund_policy"
+    },
+    {
+      "content": "<h2>1. Về S-3D</h2>\n<p>S-3D là xưởng in 3D theo yêu cầu: bạn tạo mẫu bằng AI (từ mô tả, ảnh) hoặc gửi file 3D, chọn kích thước, chất liệu, màu nhựa, và xưởng in, hoàn thiện, giao tận nhà.</p>\n<h2>2. Đặt hàng</h2>\n<ul>\n<li>Giá hiển thị ở bước chọn cỡ và giỏ hàng đã gồm phí in và VAT; phí giao hàng được tính khi xác nhận đơn.</li>\n<li>Đơn được xác nhận khi bạn thanh toán (ví, chuyển khoản, thẻ) hoặc chọn thanh toán khi nhận hàng (COD).</li>\n<li>Thời gian sản xuất thường 2–3 ngày, giao hàng 1–3 ngày trong nội thành, lâu hơn với đơn in riêng hoặc in số lượng lớn.</li>\n</ul>\n<h2>3. Mẫu & màu sắc</h2>\n<p>Ảnh xem trước và mô hình 3D trên màn hình là bản mô phỏng; màu nhựa thực tế có thể chênh lệch nhẹ. Màu không có sẵn tại xưởng sẽ được thông báo trước khi in.</p>\n<h2>4. Trách nhiệm của bạn</h2>\n<p>Bạn cam kết có quyền sử dụng ảnh, file và nội dung gửi lên, và tuân thủ <strong>Chính sách nội dung AI</strong>.</p>\n<h2>5. Liên hệ</h2>\n<p>Email <strong>hello@s-3d.vn</strong> · Hotline <strong>0901 234 567</strong> · Xưởng: TP. Hồ Chí Minh, Việt Nam.</p>",
+      "title": "Điều khoản dịch vụ",
+      "type": "terms_of_service"
+    }
+  ],
+  "templateCategories": [
+    {
+      "description": "Thiết kế chữ hiện đại",
+      "id": "tpl-cat-01",
+      "name": "Typography",
+      "slug": "typography",
+      "sortOrder": 1
+    },
+    {
+      "description": "Phong cách cổ điển",
+      "id": "tpl-cat-02",
+      "name": "Vintage",
+      "slug": "vintage",
+      "sortOrder": 2
+    },
+    {
+      "description": "Mẫu theo mùa và sự kiện",
+      "id": "tpl-cat-03",
+      "name": "Seasonal",
+      "slug": "seasonal",
+      "sortOrder": 3
+    }
+  ],
+  "templates": [
+    {
+      "categoryId": "tpl-cat-01",
+      "id": "tpl-001",
+      "image": null,
+      "isActive": true,
+      "name": "Stay Curious",
+      "sortOrder": 1
+    },
+    {
+      "categoryId": "tpl-cat-01",
+      "id": "tpl-002",
+      "image": null,
+      "isActive": true,
+      "name": "Good Vibes",
+      "sortOrder": 2
+    },
+    {
+      "categoryId": "tpl-cat-02",
+      "id": "tpl-003",
+      "image": null,
+      "isActive": true,
+      "name": "Retro Mountain",
+      "sortOrder": 3
+    },
+    {
+      "categoryId": "tpl-cat-03",
+      "id": "tpl-004",
+      "image": null,
+      "isActive": false,
+      "name": "Holiday Joy",
+      "sortOrder": 4
+    }
+  ]
+}

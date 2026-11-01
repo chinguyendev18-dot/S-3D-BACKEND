@@ -3,16 +3,18 @@
 NestJS 11 · TypeScript · class-validator · Jest · Prisma 7 (adapter-pg) · Supabase Auth. npm (có `package-lock.json`).
 Cổng 4000, tiền tố `api/v1`.
 
-Đã có: **đăng nhập + phân quyền** cho cả 4 app. Các phần khác (sản phẩm, đơn...) vẫn là dữ liệu demo ở từng app.
+Đã có: **đăng nhập + phân quyền** cho cả 4 app, và hạ tầng dùng chung (GĐ1): tài liệu OpenAPI, phân trang, upload R2, realtime,
+bộ dữ liệu seed. Các phần khác (sản phẩm, đơn...) vẫn là dữ liệu demo ở từng app.
 
 ## Lệnh
 
 ```bash
 npm run start:dev          # http://localhost:4000/api/v1
-npm run verify             # typecheck + lint + test + build — chạy trước khi báo xong
+npm run verify             # typecheck + lint + test + build + ghi lại openapi.json — chạy trước khi báo xong
+npm run openapi            # build + ghi openapi.json (rồi `yarn api:types` ở Admin, Web, Xưởng, App) — chạy khi đổi route / DTO
 npm test                   # jest: *.spec.ts cạnh code (unit) · test/*.e2e-spec.ts (không cần mạng)
 npm run db:migrate         # prisma migrate deploy (dùng DIRECT_URL, cổng 5432)
-npm run db:seed            # vai trò mặc định + tài khoản mẫu (SEED_SAMPLE_ACCOUNTS=false: chỉ vai trò)
+npm run db:seed            # các bước seed (SEED_SAMPLE_ACCOUNTS=false: bỏ tài khoản mẫu); một bước: npm run db:seed -- --only=roles
 npm run auth:create-admin -- --email a@b.vn --password "..." [--name "Tên"]   # tạo / lấy lại Quản trị hệ thống
 ```
 
@@ -25,6 +27,8 @@ như migration đầu (Supabase mở schema public qua Data API bằng publishab
 
 `PORT`, `API_PREFIX`, `CLIENT_ORIGINS` (CORS; mặc định 3000 web, 3001 admin, 3002 xưởng, 8081 Metro), `DATABASE_URL` (pooler 6543, khi chạy),
 `DIRECT_URL` (5432, cho migrate), `SUPABASE_*`, `R2_*`, `FIREBASE_*`. `DATABASE_SSL=false` để tắt TLS tới Postgres.
+`TRUST_PROXY` (ai được báo IP khách, mặc định loopback), `PUBLIC_API_URL` (link file công khai khi chưa có `R2_PUBLIC_URL`),
+`API_DOCS` (trang /api/v1/docs; mặc định bật trừ production), `REALTIME_SECRET` (ký vé socket; cần khi chạy nhiều server).
 Không in / chép khoá ra ngoài file `.env`.
 
 ## Cấu trúc
@@ -37,7 +41,17 @@ Không in / chép khoá ra ngoài file `.env`.
 - `src/roles/` — `/permissions`, `/roles` (CRUD). `src/accounts/` — `/accounts` (tài khoản nhân viên, cho Admin) và `/workshop/staff` (cho Xưởng).
 - `src/audit/` — bảng `audit_logs` + `GET /audit-logs`. `src/common/` — dạng trả về `{ success, data, message?, messageCode? }`, lỗi
   `{ success: false, statusCode, message, messageCode, details? }` (message tiếng Việt), validation, rate limit.
-- `prisma/` — schema, migrations, `seed.ts`, `create-admin.ts`.
+- `src/openapi/` — Swagger: `/api/v1/docs` (UI), `/api/v1/docs-json`; `npm run openapi` ghi `openapi.json` (commit cùng code).
+  Plugin Swagger trong `nest-cli.json` tự đọc field của mọi file `*.dto.ts` (kể cả comment) — chỉ chạy khi `nest build`.
+- `src/storage/` — `StorageService` (R2: link ký upload / tải, `describe`, `remove`). `src/uploads/` — `POST /uploads` (link PUT lên R2,
+  ký luôn kiểu + dung lượng), `GET /uploads/download?key=`, `GET /files/<key>` (file public khi chưa có domain R2). Khoá `public/...` nằm ở
+  `R2_PUBLIC_BUCKET` (bucket mở công khai), còn lại ở `R2_BUCKET` (không bao giờ bật public). Loại file theo
+  `upload-purposes.ts`; khoá `public/<purpose>/<yyyy>/<mm>/<uuid>.<ext>` hoặc `private/<purpose>/<userId>/<uuid>.<ext>`.
+- `src/realtime/` — socket.io namespace `/realtime` (cùng cổng). Mở bằng vé 60 giây dùng một lần (`POST /realtime/ticket`, app gửi
+  `auth: { token }` hoặc `?token=`); phòng `user:<id>` và `app:<shop|admin|workshop>`; kiểm tra lại mỗi phút (khoá tài khoản → ngắt).
+  Sự kiện và payload: `realtime.events.ts`.
+- `prisma/` — schema, migrations, `seed.ts` (các bước), `seeds/` (mỗi bước một file), `seed-data/` (dữ liệu demo gom từ 3 app:
+  catalog, content, shipping, discounts + ảnh sản phẩm; kiểu ở `seed-data/index.ts`), `create-admin.ts`.
 
 ## Phân quyền
 
@@ -52,6 +66,12 @@ Không in / chép khoá ra ngoài file `.env`.
 ## Quy ước
 
 - Mỗi miền một module Nest (`src/<tên>/<tên>.module.ts`, controller, service, `dto/`), đăng ký trong `AppModule`.
-- Endpoint mới mặc định cần đăng nhập; gắn quyền bằng decorator của `src/access/decorators.ts`.
+- Endpoint mới mặc định cần đăng nhập; gắn quyền bằng decorator của `src/access/decorators.ts` (tự hiện trong tài liệu API).
+- Mỗi route ghi kiểu trả về bằng `@ApiData(Dto)` / `@ApiPage(Dto)` (`src/openapi/api-data.decorator.ts`); DTO trả về là class trong
+  `dto/*.dto.ts`. Sau khi đổi: `npm run openapi`.
+- Danh sách: query kế thừa `PageQueryDto`, đọc bằng `pageArgs(query, [cột cho phép sắp xếp], '-createdAt')`, trả `toPage(items, total, args)`.
+- File: app upload qua `POST /uploads` rồi gửi `key`; module lưu key gọi `UploadsService.assertUploaded(user, key, purpose)` trước khi lưu.
+- Đẩy realtime: inject `RealtimeService` → `toUser(id, 'order:updated', …)` / `toApp('admin', …)`. Không có hàng đợi: lưu DB trước.
+- Module có dữ liệu demo: thêm bước vào `STEPS` của `prisma/seed.ts`, đọc từ `prisma/seed-data` (đừng chép lại dữ liệu từ app).
 - Comment tiếng Anh, thông báo lỗi tiếng Việt. Prettier theo `.prettierrc`.
 - Khi thêm endpoint thay thế dữ liệu demo của app nào, ghi rõ trong CLAUDE.md của app đó.

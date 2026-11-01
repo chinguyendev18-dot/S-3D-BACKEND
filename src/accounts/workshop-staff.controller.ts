@@ -17,7 +17,12 @@ import {
   RequirePermissions,
 } from '../access/decorators';
 import { requestMeta } from '../common/request-meta';
+import { ApiData } from '../openapi/api-data.decorator';
 import { RolesService } from '../roles/roles.service';
+import {
+  StaffAccountViewDto,
+  WorkshopStaffDirectoryDto,
+} from './dto/account-view.dto';
 import {
   CreateAccountDto,
   UpdateAccountDto,
@@ -33,6 +38,7 @@ export class WorkshopStaffController {
     private readonly roles: RolesService,
   ) {}
 
+  @ApiData(WorkshopStaffDirectoryDto)
   @Get()
   @RequireApp('workshop')
   async list(@CurrentUser() actor: AuthUser) {
@@ -53,6 +59,7 @@ export class WorkshopStaffController {
     };
   }
 
+  @ApiData(StaffAccountViewDto, { status: 201 })
   @Post()
   @RequirePermissions('workshop.staff.manage')
   create(
@@ -63,6 +70,7 @@ export class WorkshopStaffController {
     return this.accounts.create(actor, dto, requestMeta(request), 'workshop');
   }
 
+  @ApiData(StaffAccountViewDto)
   @Patch('me')
   @RequireApp('workshop')
   updateOwn(
@@ -73,6 +81,7 @@ export class WorkshopStaffController {
     return this.accounts.updateOwn(actor, dto, requestMeta(request));
   }
 
+  @ApiData(StaffAccountViewDto)
   @Patch(':id')
   @RequirePermissions('workshop.staff.manage')
   update(

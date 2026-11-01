@@ -1,0 +1,76 @@
+{
+  "countries": [
+    {
+      "code": "VN",
+      "currency": "VND",
+      "iso3": "VNM",
+      "name": "Vietnam"
+    }
+  ],
+  "provinces": {
+    "cities": [
+      "Hà Nội",
+      "TP. Hồ Chí Minh",
+      "Hải Phòng",
+      "Đà Nẵng",
+      "Huế",
+      "Cần Thơ"
+    ],
+    "provinces": [
+      "An Giang",
+      "Bắc Ninh",
+      "Cà Mau",
+      "Cao Bằng",
+      "Đắk Lắk",
+      "Điện Biên",
+      "Đồng Nai",
+      "Đồng Tháp",
+      "Gia Lai",
+      "Hà Tĩnh",
+      "Hưng Yên",
+      "Khánh Hòa",
+      "Lai Châu",
+      "Lâm Đồng",
+      "Lạng Sơn",
+      "Lào Cai",
+      "Nghệ An",
+      "Ninh Bình",
+      "Phú Thọ",
+      "Quảng Ngãi",
+      "Quảng Ninh",
+      "Quảng Trị",
+      "Sơn La",
+      "Tây Ninh",
+      "Thái Nguyên",
+      "Thanh Hóa",
+      "Tuyên Quang",
+      "Vĩnh Long"
+    ]
+  },
+  "zones": [
+    {
+      "basePrice": 30000,
+      "code": "VN-CITY",
+      "countryCodes": [
+        "VN"
+      ],
+      "estimatedDays": "1-2",
+      "id": "sz-01",
+      "isActive": true,
+      "name": "Nội thành",
+      "sortOrder": 1
+    },
+    {
+      "basePrice": 45000,
+      "code": "VN-NATION",
+      "countryCodes": [
+        "VN"
+      ],
+      "estimatedDays": "3-5",
+      "id": "sz-02",
+      "isActive": true,
+      "name": "Toàn quốc",
+      "sortOrder": 2
+    }
+  ]
+}

@@ -14,6 +14,8 @@ import type { Request } from 'express';
 import type { AuthUser } from '../access/auth-user';
 import { CurrentUser, RequirePermissions } from '../access/decorators';
 import { requestMeta } from '../common/request-meta';
+import { ApiData } from '../openapi/api-data.decorator';
+import { StaffAccountViewDto } from './dto/account-view.dto';
 import {
   AccountQueryDto,
   CreateAccountDto,
@@ -26,12 +28,14 @@ import { StaffAccountsService } from './staff-accounts.service';
 export class AccountsController {
   constructor(private readonly accounts: StaffAccountsService) {}
 
+  @ApiData(StaffAccountViewDto, { array: true })
   @Get()
   @RequirePermissions('admin.accounts.view')
   list(@Query() query: AccountQueryDto) {
     return this.accounts.list(query);
   }
 
+  @ApiData(StaffAccountViewDto, { status: 201 })
   @Post()
   @RequirePermissions('admin.accounts.manage')
   create(
@@ -42,6 +46,7 @@ export class AccountsController {
     return this.accounts.create(actor, dto, requestMeta(request));
   }
 
+  @ApiData(StaffAccountViewDto)
   @Patch(':id')
   @RequirePermissions('admin.accounts.manage')
   update(

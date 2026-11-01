@@ -1,0 +1,103 @@
+[
+  {
+    "categoryIds": [],
+    "channels": [],
+    "code": "S3D10",
+    "description": "Giảm 10% cho mọi đơn, tối đa 100.000 ₫.",
+    "endsInDays": 30,
+    "id": "dc-001",
+    "isActive": true,
+    "materials": [],
+    "maxDiscount": 100000,
+    "minOrder": 200000,
+    "name": "Chào mừng khách mới",
+    "perCustomerLimit": 1,
+    "scope": "all",
+    "startsInDays": null,
+    "type": "percent",
+    "usageLimit": 200,
+    "value": 10
+  },
+  {
+    "categoryIds": [],
+    "channels": [],
+    "code": "FREESHIP",
+    "description": "Miễn phí giao hàng cho đơn từ 500.000 ₫.",
+    "endsInDays": null,
+    "id": "dc-002",
+    "isActive": true,
+    "materials": [],
+    "maxDiscount": null,
+    "minOrder": 500000,
+    "name": "Miễn phí vận chuyển",
+    "perCustomerLimit": null,
+    "scope": "all",
+    "startsInDays": null,
+    "type": "free_shipping",
+    "usageLimit": null,
+    "value": 0
+  },
+  {
+    "categoryIds": [
+      "cat-figure"
+    ],
+    "channels": [],
+    "code": "FIGURE50K",
+    "description": "Giảm 50.000 ₫ cho figure & mô hình.",
+    "endsInDays": 14,
+    "id": "dc-003",
+    "isActive": true,
+    "materials": [],
+    "maxDiscount": null,
+    "minOrder": 300000,
+    "name": "Tuần lễ Figure",
+    "perCustomerLimit": 1,
+    "scope": "category",
+    "startsInDays": null,
+    "type": "fixed",
+    "usageLimit": 50,
+    "value": 50000
+  },
+  {
+    "categoryIds": [],
+    "channels": [
+      "Shopee"
+    ],
+    "code": "SHOPEE15",
+    "description": "",
+    "endsInDays": -5,
+    "id": "dc-004",
+    "isActive": true,
+    "materials": [],
+    "maxDiscount": 80000,
+    "minOrder": 0,
+    "name": "Flash sale Shopee 10.10",
+    "perCustomerLimit": 1,
+    "scope": "all",
+    "startsInDays": null,
+    "type": "percent",
+    "usageLimit": 100,
+    "value": 15
+  },
+  {
+    "categoryIds": [],
+    "channels": [],
+    "code": "RESIN20",
+    "description": "Giảm 20% sản phẩm in Resin.",
+    "endsInDays": 40,
+    "id": "dc-005",
+    "isActive": true,
+    "materials": [
+      "RESIN"
+    ],
+    "maxDiscount": 150000,
+    "minOrder": 0,
+    "name": "Ra mắt dòng Resin",
+    "perCustomerLimit": 1,
+    "scope": "material",
+    "startsInDays": 7,
+    "type": "percent",
+    "usageLimit": 80,
+    "value": 20
+  }
+]

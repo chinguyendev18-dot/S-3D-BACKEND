@@ -3,6 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { clientOrigins } from './common/client-origins';
+import { DOCS_PATH, setupOpenApi } from './openapi/openapi';
+import { SocketIoAdapter } from './realtime/socket-io.adapter';
 
 /**
  * Which proxies may report the visitor's address (X-Forwarded-For), in Express's "trust proxy"
@@ -20,16 +22,25 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const port = config.get<number>('PORT', 4000);
   const apiPrefix = config.get<string>('API_PREFIX', 'api/v1');
+  const origins = clientOrigins(config);
 
   app.set('trust proxy', trustProxy(config.get('TRUST_PROXY', 'loopback')));
   app.setGlobalPrefix(apiPrefix);
   app.enableCors({
-    origin: clientOrigins(config),
+    origin: origins,
     credentials: true,
   });
+  app.useWebSocketAdapter(new SocketIoAdapter(app, origins));
   // Validation, guards, the response shape and errors are set up in AppModule, so the e2e tests
   // get them too.
   app.enableShutdownHooks();
+
+  // API docs: on unless API_DOCS=false (in production they show every route to anyone).
+  const docs =
+    config.get<string>('API_DOCS', '') !== 'false' &&
+    (config.get<string>('API_DOCS') === 'true' ||
+      config.get<string>('NODE_ENV') !== 'production');
+  if (docs) setupOpenApi(app, apiPrefix);
 
   // No host: listens on IPv6 and IPv4 together. On 0.0.0.0 only, every call to "localhost"
   // (which tries ::1 first) waited 100-200 ms before falling back to IPv4.
@@ -37,6 +48,8 @@ async function bootstrap() {
   console.log(
     `S-3D Backend is running at http://localhost:${port}/${apiPrefix}`,
   );
+  if (docs)
+    console.log(`API docs: http://localhost:${port}/${apiPrefix}/${DOCS_PATH}`);
 }
 
 void bootstrap();
