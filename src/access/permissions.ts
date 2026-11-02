@@ -22,7 +22,6 @@ export const PERMISSION_GROUPS: Record<string, string> = {
   production: 'Sản xuất',
   products: 'Sản phẩm',
   statistics: 'Thống kê',
-  templates: 'Mẫu thiết kế',
   'workshop.activity': 'Nhật ký xưởng',
   'workshop.materials': 'Vật liệu',
   'workshop.orders': 'Đơn tại xưởng',
@@ -72,18 +71,6 @@ export const PERMISSIONS: readonly PermissionDef[] = [
     group: 'products',
     key: 'admin.products.manage',
     label: 'Thêm, sửa, xoá sản phẩm và danh mục',
-  },
-  {
-    scope: 'admin',
-    group: 'templates',
-    key: 'admin.templates.view',
-    label: 'Xem mẫu thiết kế',
-  },
-  {
-    scope: 'admin',
-    group: 'templates',
-    key: 'admin.templates.manage',
-    label: 'Thêm, sửa, xoá mẫu thiết kế',
   },
   {
     scope: 'admin',

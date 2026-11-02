@@ -46,7 +46,7 @@ describe('seed data', () => {
     }
   });
 
-  it('links blog posts, templates and discounts to what exists', () => {
+  it('links blog posts and discounts to what exists', () => {
     const blogCategories = new Set(
       SEED_CONTENT.blogCategories.map((c) => c.id),
     );
@@ -54,12 +54,6 @@ describe('seed data', () => {
       SEED_CONTENT.blogPosts.every((post) =>
         blogCategories.has(post.categoryId),
       ),
-    ).toBe(true);
-    const templateCategories = new Set(
-      SEED_CONTENT.templateCategories.map((c) => c.id),
-    );
-    expect(
-      SEED_CONTENT.templates.every((t) => templateCategories.has(t.categoryId)),
     ).toBe(true);
 
     const categoryIds = new Set(categories.map((category) => category.id));

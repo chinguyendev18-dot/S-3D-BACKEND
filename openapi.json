@@ -2888,6 +2888,4032 @@
         ],
         "description": "Cần đăng nhập."
       }
+    },
+    "/products/categories": {
+      "get": {
+        "operationId": "Categories_list",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "countryCode",
+            "required": false,
+            "in": "query",
+            "description": "Sent by the storefront; not used (one country).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/ProductCategoryViewDto"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Categories"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "post": {
+        "operationId": "Categories_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductCategoryViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Categories"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/products/categories/{id}": {
+      "get": {
+        "operationId": "Categories_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductCategoryViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Categories"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "patch": {
+        "operationId": "Categories_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductCategoryViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Categories"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      },
+      "delete": {
+        "operationId": "Categories_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Categories"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/products": {
+      "get": {
+        "operationId": "Products_list",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "required": false,
+            "in": "query",
+            "description": "Sent by the storefront and the admin for prices per country; the shop sells in VND only.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productCategoryId",
+            "required": false,
+            "in": "query",
+            "description": "A category id (the storefront and the admin send productCategoryId).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoryId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isActive",
+            "required": false,
+            "in": "query",
+            "description": "Staff only: true = on sale, false = drafts and hidden. Customers always get products on sale.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Staff only.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "nhap",
+                "dang_ban",
+                "an"
+              ]
+            }
+          },
+          {
+            "name": "featured",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1.",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows per page: 1–100, 20 when left out.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Search text.",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "A field to sort by, \"-\" first for newest / largest first: `-createdAt`, `name`.",
+            "schema": {
+              "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "items": {
+                            "$ref": "#/components/schemas/ProductViewDto"
+                          },
+                          "type": "array"
+                        },
+                        "meta": {
+                          "properties": {
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "page": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "totalPages": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "limit",
+                            "page",
+                            "total",
+                            "totalPages"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "items",
+                        "meta",
+                        "limit",
+                        "page",
+                        "total",
+                        "totalPages"
+                      ],
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Products"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "post": {
+        "operationId": "Products_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "Products_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Products"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "patch": {
+        "operationId": "Products_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProductViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      },
+      "delete": {
+        "operationId": "Products_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/print-areas": {
+      "get": {
+        "operationId": "PrintAreas_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/PrintAreaViewDto"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "PrintAreas"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "post": {
+        "operationId": "PrintAreas_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePrintAreaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PrintAreaViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "PrintAreas"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/print-areas/{id}": {
+      "patch": {
+        "operationId": "PrintAreas_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePrintAreaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PrintAreaViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "PrintAreas"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      },
+      "delete": {
+        "operationId": "PrintAreas_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "PrintAreas"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/print-options": {
+      "get": {
+        "operationId": "PrintOptions_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PrintOptionsDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "PrintOptions"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "put": {
+        "operationId": "PrintOptions_replace",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrintOptionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PrintOptionsDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "PrintOptions"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/blog-categories": {
+      "get": {
+        "operationId": "Blog_categories",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/BlogCategoryViewDto"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "post": {
+        "operationId": "Blog_createCategory",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBlogCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BlogCategoryViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.blog.manage`."
+      }
+    },
+    "/blog-categories/{id}": {
+      "patch": {
+        "operationId": "Blog_updateCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBlogCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BlogCategoryViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.blog.manage`."
+      },
+      "delete": {
+        "operationId": "Blog_removeCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.blog.manage`."
+      }
+    },
+    "/blog-posts": {
+      "get": {
+        "operationId": "Blog_posts",
+        "parameters": [
+          {
+            "name": "blogCategoryId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoryId",
+            "required": false,
+            "in": "query",
+            "description": "The admin sends categoryId.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1.",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows per page: 1–100, 20 when left out.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Search text.",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "A field to sort by, \"-\" first for newest / largest first: `-createdAt`, `name`.",
+            "schema": {
+              "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "items": {
+                            "$ref": "#/components/schemas/BlogPostViewDto"
+                          },
+                          "type": "array"
+                        },
+                        "meta": {
+                          "properties": {
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "page": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "totalPages": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "limit",
+                            "page",
+                            "total",
+                            "totalPages"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "items",
+                        "meta",
+                        "limit",
+                        "page",
+                        "total",
+                        "totalPages"
+                      ],
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      }
+    },
+    "/blog-posts/{id}": {
+      "get": {
+        "operationId": "Blog_post",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BlogPostViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      }
+    },
+    "/blog-categories/{id}/blog-posts": {
+      "post": {
+        "operationId": "Blog_createPost",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBlogPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BlogPostViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.blog.manage`."
+      }
+    },
+    "/blog-categories/{id}/blog-posts/{postId}": {
+      "patch": {
+        "operationId": "Blog_updatePost",
+        "parameters": [
+          {
+            "name": "postId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBlogPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BlogPostViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.blog.manage`."
+      },
+      "delete": {
+        "operationId": "Blog_removePost",
+        "parameters": [
+          {
+            "name": "postId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Blog"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.blog.manage`."
+      }
+    },
+    "/legal-documents": {
+      "get": {
+        "operationId": "LegalDocuments_list",
+        "parameters": [
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "terms_of_service",
+                "privacy_policy",
+                "cookie_policy",
+                "ai_content_policy",
+                "return_refund_policy",
+                "faq"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/LegalDocumentViewDto"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "LegalDocuments"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "post": {
+        "operationId": "LegalDocuments_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLegalDocumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/LegalDocumentViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "LegalDocuments"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.content.manage`."
+      }
+    },
+    "/legal-documents/{id}": {
+      "get": {
+        "operationId": "LegalDocuments_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/LegalDocumentViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "LegalDocuments"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "patch": {
+        "operationId": "LegalDocuments_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLegalDocumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/LegalDocumentViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "LegalDocuments"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.content.manage`."
+      },
+      "delete": {
+        "operationId": "LegalDocuments_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "LegalDocuments"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.content.manage`."
+      }
+    },
+    "/countries": {
+      "get": {
+        "operationId": "Shipping_countries",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1.",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows per page: 1–100, 20 when left out.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Search text.",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "A field to sort by, \"-\" first for newest / largest first: `-createdAt`, `name`.",
+            "schema": {
+              "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "items": {
+                            "$ref": "#/components/schemas/CountryViewDto"
+                          },
+                          "type": "array"
+                        },
+                        "meta": {
+                          "properties": {
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "page": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "totalPages": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "limit",
+                            "page",
+                            "total",
+                            "totalPages"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "items",
+                        "meta",
+                        "limit",
+                        "page",
+                        "total",
+                        "totalPages"
+                      ],
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Shipping"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      }
+    },
+    "/shipping/zones": {
+      "get": {
+        "operationId": "Shipping_zones",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1.",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows per page: 1–100, 20 when left out.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Search text.",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "A field to sort by, \"-\" first for newest / largest first: `-createdAt`, `name`.",
+            "schema": {
+              "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "productId",
+            "required": false,
+            "in": "query",
+            "description": "The admin sends it for per-product zones; zones are shop-wide here.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "items": {
+                            "$ref": "#/components/schemas/ShippingZoneViewDto"
+                          },
+                          "type": "array"
+                        },
+                        "meta": {
+                          "properties": {
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "page": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "totalPages": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "limit",
+                            "page",
+                            "total",
+                            "totalPages"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "items",
+                        "meta",
+                        "limit",
+                        "page",
+                        "total",
+                        "totalPages"
+                      ],
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Shipping"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "post": {
+        "operationId": "Shipping_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateZoneDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ShippingZoneViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Shipping"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.orders.manage`."
+      }
+    },
+    "/shipping/zones/{id}": {
+      "get": {
+        "operationId": "Shipping_zone",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ShippingZoneViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Shipping"
+        ],
+        "security": [],
+        "description": "Không cần đăng nhập."
+      },
+      "patch": {
+        "operationId": "Shipping_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateZoneDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ShippingZoneViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Shipping"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.orders.manage`."
+      },
+      "delete": {
+        "operationId": "Shipping_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Shipping"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.orders.manage`."
+      }
+    },
+    "/discounts": {
+      "get": {
+        "operationId": "Discounts_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/DiscountViewDto"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Discounts"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.discounts.view`."
+      },
+      "post": {
+        "operationId": "Discounts_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDiscountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DiscountViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Discounts"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.discounts.manage`."
+      }
+    },
+    "/discounts/{id}": {
+      "patch": {
+        "operationId": "Discounts_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDiscountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DiscountViewDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Discounts"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.discounts.manage`."
+      },
+      "delete": {
+        "operationId": "Discounts_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "nullable": true,
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "Discounts"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.discounts.manage`."
+      }
     }
   },
   "info": {
@@ -3952,10 +7978,10 @@
               "content-image",
               "model",
               "order-artwork",
+              "product-model",
               "product-image",
               "return-photo",
-              "support-attachment",
-              "template-image"
+              "support-attachment"
             ],
             "type": "string"
           },
@@ -4033,6 +8059,2118 @@
               "workshop"
             ],
             "type": "string"
+          }
+        }
+      },
+      "ProductCategoryViewDto": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "The first product's picture, for category tiles."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "productCount": {
+            "type": "number",
+            "description": "Products on sale in it (staff: all of them)."
+          }
+        },
+        "required": [
+          "imageUrl",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "slug",
+          "name",
+          "description",
+          "sortOrder",
+          "productCount"
+        ]
+      },
+      "CreateCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "slug": {
+            "type": "string",
+            "description": "Made from the name when left out.",
+            "maxLength": 80,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "slug": {
+            "type": "string",
+            "description": "Made from the name when left out.",
+            "maxLength": 80,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        }
+      },
+      "ProductCategoryRefDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug"
+        ]
+      },
+      "ModelSizeViewDto": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "z": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      "ModelMetricsViewDto": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "$ref": "#/components/schemas/ModelSizeViewDto"
+          },
+          "volume": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "size",
+          "volume"
+        ]
+      },
+      "ProductVariantDto": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "number",
+            "nullable": true
+          },
+          "id": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "colorId": {
+            "type": "string"
+          },
+          "sizeId": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "number"
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "imageUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "price",
+          "id",
+          "sku",
+          "colorId",
+          "sizeId",
+          "stock",
+          "isAvailable",
+          "imageUrl"
+        ]
+      },
+      "PrintTemplateDto": {
+        "type": "object",
+        "properties": {
+          "comparePrice": {
+            "type": "number",
+            "nullable": true
+          },
+          "fixedPrice": {
+            "type": "number",
+            "nullable": true
+          },
+          "metrics": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ModelMetricsViewDto"
+              }
+            ]
+          },
+          "priceMode": {
+            "enum": [
+              "tu_dong",
+              "co_dinh"
+            ],
+            "type": "string"
+          },
+          "upAxis": {
+            "enum": [
+              "x",
+              "y",
+              "z"
+            ],
+            "type": "string"
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultColor": {
+            "type": "string"
+          },
+          "defaultHeightMm": {
+            "type": "number"
+          },
+          "defaultMaterial": {
+            "type": "string"
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxHeightMm": {
+            "type": "number"
+          },
+          "minHeightMm": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "comparePrice",
+          "fixedPrice",
+          "metrics",
+          "priceMode",
+          "upAxis",
+          "colors",
+          "defaultColor",
+          "defaultHeightMm",
+          "defaultMaterial",
+          "materials",
+          "maxHeightMm",
+          "minHeightMm"
+        ]
+      },
+      "ProductColorDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "hexCode": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "label",
+          "hexCode"
+        ]
+      },
+      "ProductSizeOptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "heightMm": {
+            "type": "number"
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "label",
+          "heightMm",
+          "sortOrder"
+        ]
+      },
+      "ProductViewDto": {
+        "type": "object",
+        "properties": {
+          "categoryId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productCategoryId": {
+            "type": "string",
+            "nullable": true
+          },
+          "productCategory": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProductCategoryRefDto"
+              }
+            ]
+          },
+          "category": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProductCategoryRefDto"
+              }
+            ]
+          },
+          "status": {
+            "enum": [
+              "nhap",
+              "dang_ban",
+              "an"
+            ],
+            "type": "string"
+          },
+          "oldPrice": {
+            "type": "number",
+            "nullable": true
+          },
+          "comparePrice": {
+            "type": "number",
+            "nullable": true
+          },
+          "priceMode": {
+            "enum": [
+              "tu_dong",
+              "co_dinh"
+            ],
+            "type": "string"
+          },
+          "fixedPrice": {
+            "type": "number",
+            "nullable": true
+          },
+          "upAxis": {
+            "enum": [
+              "x",
+              "y",
+              "z"
+            ],
+            "type": "string"
+          },
+          "metrics": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ModelMetricsViewDto"
+              }
+            ]
+          },
+          "variants": {
+            "description": "Detail only (GET /products/:id): every colour × height with its price.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductVariantDto"
+            }
+          },
+          "workshopNote": {
+            "type": "string",
+            "description": "Staff only."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "One line (plain text), for cards."
+          },
+          "shortDesc": {
+            "type": "string"
+          },
+          "longDescription": {
+            "type": "string",
+            "description": "HTML, for the product page."
+          },
+          "categoryName": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "price": {
+            "type": "number",
+            "description": "VND, at the default height."
+          },
+          "stock": {
+            "type": "number"
+          },
+          "remainingQuantity": {
+            "type": "number"
+          },
+          "material": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "gallery": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultMaterial": {
+            "type": "string"
+          },
+          "colors": {
+            "description": "Filament ids offered (empty: all of the material); the picker's colours are in productColors.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultColor": {
+            "type": "string"
+          },
+          "defaultHeightMm": {
+            "type": "number"
+          },
+          "minHeightMm": {
+            "type": "number"
+          },
+          "maxHeightMm": {
+            "type": "number"
+          },
+          "modelUrl": {
+            "type": "string"
+          },
+          "modelFileName": {
+            "type": "string"
+          },
+          "modelSource": {
+            "type": "string"
+          },
+          "meshyPrompt": {
+            "type": "string"
+          },
+          "designId": {
+            "type": "string"
+          },
+          "template": {
+            "$ref": "#/components/schemas/PrintTemplateDto"
+          },
+          "productColors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductColorDto"
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductSizeOptionDto"
+            }
+          }
+        },
+        "required": [
+          "categoryId",
+          "productCategoryId",
+          "productCategory",
+          "category",
+          "status",
+          "oldPrice",
+          "comparePrice",
+          "priceMode",
+          "fixedPrice",
+          "upAxis",
+          "metrics",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "slug",
+          "sku",
+          "name",
+          "description",
+          "shortDesc",
+          "longDescription",
+          "categoryName",
+          "isActive",
+          "featured",
+          "sortOrder",
+          "tags",
+          "price",
+          "stock",
+          "remainingQuantity",
+          "material",
+          "thumbnail",
+          "imageUrl",
+          "images",
+          "gallery",
+          "materials",
+          "defaultMaterial",
+          "colors",
+          "defaultColor",
+          "defaultHeightMm",
+          "minHeightMm",
+          "maxHeightMm",
+          "modelUrl",
+          "modelFileName",
+          "modelSource",
+          "meshyPrompt",
+          "designId",
+          "template",
+          "productColors",
+          "sizes"
+        ]
+      },
+      "ModelSizeDto": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "minimum": 0
+          },
+          "y": {
+            "type": "number",
+            "minimum": 0
+          },
+          "z": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      "ModelMetricsDto": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "$ref": "#/components/schemas/ModelSizeDto"
+          },
+          "volume": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "size",
+          "volume"
+        ]
+      },
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "slug": {
+            "type": "string",
+            "description": "Made from the name when left out.",
+            "maxLength": 80,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "sku": {
+            "type": "string",
+            "description": "Made from the category when left out.",
+            "pattern": "^[A-Za-z0-9-]{3,40}$"
+          },
+          "shortDesc": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "description": "HTML.",
+            "maxLength": 50000
+          },
+          "categoryId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "nhap",
+              "dang_ban",
+              "an"
+            ]
+          },
+          "price": {
+            "type": "number",
+            "description": "The admin's quote at the default height; the server works it out again.",
+            "minimum": 0
+          },
+          "comparePrice": {
+            "type": "number",
+            "nullable": true,
+            "description": "Struck-through \"before\" price.",
+            "minimum": 0
+          },
+          "stock": {
+            "type": "number",
+            "minimum": 0
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "tags": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "material": {
+            "type": "string",
+            "description": "As customers read it (\"PLA trắng\"); made from the default material when left out.",
+            "maxLength": 60
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Cover picture: URL from POST /uploads (or an R2 key).",
+            "maxLength": 1000
+          },
+          "images": {
+            "maxItems": 12,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "priceMode": {
+            "type": "string",
+            "enum": [
+              "tu_dong",
+              "co_dinh"
+            ]
+          },
+          "fixedPrice": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultMaterial": {
+            "type": "string"
+          },
+          "colors": {
+            "description": "Filament ids offered; empty: every filament of the material.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultColor": {
+            "type": "string"
+          },
+          "defaultHeightMm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "minHeightMm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "maxHeightMm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "upAxis": {
+            "type": "string",
+            "enum": [
+              "x",
+              "y",
+              "z"
+            ]
+          },
+          "metrics": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ModelMetricsDto"
+              }
+            ]
+          },
+          "modelUrl": {
+            "type": "string",
+            "description": "The 3D model: URL from POST /uploads (purpose product-model).",
+            "maxLength": 1000
+          },
+          "modelFileName": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "modelSource": {
+            "type": "string",
+            "enum": [
+              "meshy",
+              "tai_len"
+            ]
+          },
+          "meshyPrompt": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "designId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "workshopNote": {
+            "type": "string",
+            "description": "For the workshop only; customers never see it.",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateProductDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "slug": {
+            "type": "string",
+            "description": "Made from the name when left out.",
+            "maxLength": 80,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "sku": {
+            "type": "string",
+            "description": "Made from the category when left out.",
+            "pattern": "^[A-Za-z0-9-]{3,40}$"
+          },
+          "shortDesc": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "description": "HTML.",
+            "maxLength": 50000
+          },
+          "categoryId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "enum": [
+              "nhap",
+              "dang_ban",
+              "an"
+            ],
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "description": "The admin's quote at the default height; the server works it out again.",
+            "minimum": 0
+          },
+          "comparePrice": {
+            "type": "number",
+            "nullable": true,
+            "description": "Struck-through \"before\" price.",
+            "minimum": 0
+          },
+          "stock": {
+            "type": "number",
+            "minimum": 0
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "tags": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "material": {
+            "type": "string",
+            "description": "As customers read it (\"PLA trắng\"); made from the default material when left out.",
+            "maxLength": 60
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Cover picture: URL from POST /uploads (or an R2 key).",
+            "maxLength": 1000
+          },
+          "images": {
+            "maxItems": 12,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "priceMode": {
+            "enum": [
+              "tu_dong",
+              "co_dinh"
+            ],
+            "type": "string"
+          },
+          "fixedPrice": {
+            "type": "number",
+            "nullable": true,
+            "minimum": 0
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultMaterial": {
+            "type": "string"
+          },
+          "colors": {
+            "description": "Filament ids offered; empty: every filament of the material.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultColor": {
+            "type": "string"
+          },
+          "defaultHeightMm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "minHeightMm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "maxHeightMm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "upAxis": {
+            "enum": [
+              "x",
+              "y",
+              "z"
+            ],
+            "type": "string"
+          },
+          "metrics": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ModelMetricsDto"
+              }
+            ]
+          },
+          "modelUrl": {
+            "type": "string",
+            "description": "The 3D model: URL from POST /uploads (purpose product-model).",
+            "maxLength": 1000
+          },
+          "modelFileName": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "modelSource": {
+            "enum": [
+              "meshy",
+              "tai_len"
+            ],
+            "type": "string"
+          },
+          "meshyPrompt": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "designId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "workshopNote": {
+            "type": "string",
+            "description": "For the workshop only; customers never see it.",
+            "maxLength": 2000
+          }
+        }
+      },
+      "PrintAreaViewDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "widthCm": {
+            "type": "number"
+          },
+          "heightCm": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number",
+            "description": "Same as widthCm / heightCm, with the unit, for the admin's tables."
+          },
+          "height": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "name",
+          "label",
+          "widthCm",
+          "heightCm",
+          "width",
+          "height",
+          "unit",
+          "sortOrder",
+          "isActive"
+        ]
+      },
+      "CreatePrintAreaDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,30}$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "widthCm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "heightCm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "widthCm",
+          "heightCm"
+        ]
+      },
+      "UpdatePrintAreaDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,30}$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "widthCm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "heightCm": {
+            "type": "number",
+            "minimum": 1
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PrintMaterialDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "PLA, PETG, RESIN…",
+            "pattern": "^[A-Z0-9_]{2,20}$"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "density": {
+            "type": "number",
+            "description": "g/cm³",
+            "minimum": 0.1,
+            "maximum": 5
+          },
+          "fill": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 1
+          },
+          "gramsPerHour": {
+            "type": "number",
+            "minimum": 0.1
+          },
+          "pricePerGram": {
+            "type": "number",
+            "minimum": 0
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "density",
+          "fill",
+          "gramsPerHour",
+          "pricePerGram"
+        ]
+      },
+      "FilamentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "trang, den, xanh-mint…",
+            "pattern": "^[a-z0-9-]{1,30}$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "hex": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "materials": {
+            "description": "Material ids it exists in.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "hex",
+          "materials"
+        ]
+      },
+      "PrintPricingDto": {
+        "type": "object",
+        "properties": {
+          "extraColorFee": {
+            "type": "number",
+            "description": "VND for each colour beyond the first.",
+            "minimum": 0
+          },
+          "machineRatePerHour": {
+            "type": "number",
+            "minimum": 0
+          },
+          "maxHeightMm": {
+            "type": "number",
+            "minimum": 10,
+            "maximum": 2000
+          },
+          "maxPrintColors": {
+            "type": "number",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          "minHeightMm": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "setupFee": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "extraColorFee",
+          "machineRatePerHour",
+          "maxHeightMm",
+          "maxPrintColors",
+          "minHeightMm",
+          "setupFee"
+        ]
+      },
+      "PrintOptionsDto": {
+        "type": "object",
+        "properties": {
+          "materials": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintMaterialDto"
+            }
+          },
+          "filaments": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilamentDto"
+            }
+          },
+          "pricing": {
+            "$ref": "#/components/schemas/PrintPricingDto"
+          }
+        },
+        "required": [
+          "materials",
+          "filaments",
+          "pricing"
+        ]
+      },
+      "BlogCountDto": {
+        "type": "object",
+        "properties": {
+          "posts": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "posts"
+        ]
+      },
+      "BlogCategoryViewDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "index": {
+            "type": "number"
+          },
+          "_count": {
+            "$ref": "#/components/schemas/BlogCountDto"
+          }
+        },
+        "required": [
+          "createdAt",
+          "updatedAt",
+          "id",
+          "name",
+          "slug",
+          "index",
+          "_count"
+        ]
+      },
+      "CreateBlogCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "slug": {
+            "type": "string"
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateBlogCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "slug": {
+            "type": "string"
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      },
+      "BlogCategoryRefDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "index": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "index"
+        ]
+      },
+      "BlogPostViewDto": {
+        "type": "object",
+        "properties": {
+          "thumbnail": {
+            "type": "string",
+            "nullable": true
+          },
+          "blogCategoryId": {
+            "type": "string",
+            "nullable": true
+          },
+          "blogCategory": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BlogCategoryRefDto"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "index": {
+            "type": "number"
+          },
+          "published": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "thumbnail",
+          "blogCategoryId",
+          "blogCategory",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "title",
+          "slug",
+          "description",
+          "content",
+          "index",
+          "published"
+        ]
+      },
+      "CreateBlogPostDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "slug": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "content": {
+            "type": "string",
+            "description": "HTML.",
+            "maxLength": 200000
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Cover picture: URL from POST /uploads (purpose blog-image).",
+            "maxLength": 1000
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0
+          },
+          "published": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "UpdateBlogPostDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "slug": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "content": {
+            "type": "string",
+            "description": "HTML.",
+            "maxLength": 200000
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Cover picture: URL from POST /uploads (purpose blog-image).",
+            "maxLength": 1000
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "blogCategoryId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Moves the post to another category."
+          }
+        }
+      },
+      "LegalDocumentViewDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "terms_of_service",
+              "privacy_policy",
+              "cookie_policy",
+              "ai_content_policy",
+              "return_refund_policy",
+              "faq"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "title",
+          "content",
+          "sortOrder"
+        ]
+      },
+      "CreateLegalDocumentDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "terms_of_service",
+              "privacy_policy",
+              "cookie_policy",
+              "ai_content_policy",
+              "return_refund_policy",
+              "faq"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "content": {
+            "type": "string",
+            "description": "HTML.",
+            "maxLength": 200000
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "content"
+        ]
+      },
+      "UpdateLegalDocumentDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "terms_of_service",
+              "privacy_policy",
+              "cookie_policy",
+              "ai_content_policy",
+              "return_refund_policy",
+              "faq"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "content": {
+            "type": "string",
+            "description": "HTML.",
+            "maxLength": 200000
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        }
+      },
+      "CountryViewDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The country code: the admin picks countries by id."
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "iso2": {
+            "type": "string"
+          },
+          "iso3": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "name",
+          "iso2",
+          "iso3",
+          "currency"
+        ]
+      },
+      "ShippingZoneViewDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "country",
+              "eu_us",
+              "row",
+              "unsupported"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "countries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CountryViewDto"
+            }
+          },
+          "countryIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "firstItemPrice": {
+            "type": "number"
+          },
+          "additionalItemPrice": {
+            "type": "number"
+          },
+          "basePrice": {
+            "type": "number",
+            "description": "Same as firstItemPrice."
+          },
+          "currency": {
+            "type": "string"
+          },
+          "estimatedDays": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "productId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "name",
+          "code",
+          "countries",
+          "countryIds",
+          "firstItemPrice",
+          "additionalItemPrice",
+          "basePrice",
+          "currency",
+          "estimatedDays",
+          "isActive",
+          "sortOrder",
+          "productId"
+        ]
+      },
+      "CreateZoneDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "countryIds": {
+            "description": "Country codes (VN…).",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "firstItemPrice": {
+            "type": "number",
+            "description": "VND for the first item of an order.",
+            "minimum": 0
+          },
+          "additionalItemPrice": {
+            "type": "number",
+            "description": "VND for each item after the first.",
+            "minimum": 0
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "country",
+              "eu_us",
+              "row",
+              "unsupported"
+            ]
+          },
+          "estimatedDays": {
+            "type": "string",
+            "description": "\"1-2\", \"3-5\"…",
+            "maxLength": 20
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 30
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Ignored: zones are shop-wide (the admin form still sends it)."
+          }
+        },
+        "required": [
+          "name",
+          "countryIds"
+        ]
+      },
+      "UpdateZoneDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "countryIds": {
+            "description": "Country codes (VN…).",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "firstItemPrice": {
+            "type": "number",
+            "description": "VND for the first item of an order.",
+            "minimum": 0
+          },
+          "additionalItemPrice": {
+            "type": "number",
+            "description": "VND for each item after the first.",
+            "minimum": 0
+          },
+          "type": {
+            "enum": [
+              "country",
+              "eu_us",
+              "row",
+              "unsupported"
+            ],
+            "type": "string"
+          },
+          "estimatedDays": {
+            "type": "string",
+            "description": "\"1-2\", \"3-5\"…",
+            "maxLength": 20
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 30
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Ignored: zones are shop-wide (the admin form still sends it)."
+          }
+        }
+      },
+      "DiscountViewDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "percent",
+              "fixed",
+              "free_shipping"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "all",
+              "category",
+              "material"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "minOrder": {
+            "type": "number"
+          },
+          "maxDiscount": {
+            "type": "number",
+            "description": "0: no cap."
+          },
+          "usageLimit": {
+            "type": "number",
+            "description": "0: unlimited."
+          },
+          "perCustomerLimit": {
+            "type": "number",
+            "description": "0: unlimited."
+          },
+          "usedCount": {
+            "type": "number"
+          },
+          "startsAt": {
+            "type": "string",
+            "description": "ISO date, \"\" = starts right away."
+          },
+          "endsAt": {
+            "type": "string",
+            "description": "ISO date, \"\" = never ends."
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "type",
+          "scope",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "code",
+          "name",
+          "description",
+          "value",
+          "categoryIds",
+          "materials",
+          "channels",
+          "minOrder",
+          "maxDiscount",
+          "usageLimit",
+          "perCustomerLimit",
+          "usedCount",
+          "startsAt",
+          "endsAt",
+          "isActive"
+        ]
+      },
+      "CreateDiscountDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_-]{3,30}$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "percent",
+              "fixed",
+              "free_shipping"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "description": "Percent (1–100) or VND; ignored for free shipping.",
+            "minimum": 0
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "all",
+              "category",
+              "material"
+            ]
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "minOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "maxDiscount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "usageLimit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "perCustomerLimit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "startsAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "endsAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "type",
+          "value"
+        ]
+      },
+      "UpdateDiscountDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_-]{3,30}$"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "type": {
+            "enum": [
+              "percent",
+              "fixed",
+              "free_shipping"
+            ],
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "description": "Percent (1–100) or VND; ignored for free shipping.",
+            "minimum": 0
+          },
+          "scope": {
+            "enum": [
+              "all",
+              "category",
+              "material"
+            ],
+            "type": "string"
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "minOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "maxDiscount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "usageLimit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "perCustomerLimit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "startsAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "endsAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
           }
         }
       },

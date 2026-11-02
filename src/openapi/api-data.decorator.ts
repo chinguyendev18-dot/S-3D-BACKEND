@@ -56,7 +56,21 @@ export function ApiData(
   );
 }
 
-/** A page of a list: `{ items, total, page, pageSize, pageCount }` (see common/pagination.ts). */
+const PAGE_META: SchemaObject = {
+  properties: {
+    limit: { type: 'integer' },
+    page: { type: 'integer' },
+    total: { type: 'integer' },
+    totalPages: { type: 'integer' },
+  },
+  required: ['limit', 'page', 'total', 'totalPages'],
+  type: 'object',
+};
+
+/**
+ * A page of a list: `{ items, page, limit, total, totalPages, meta }` (common/pagination.ts), the
+ * counts given at the top and again in `meta`.
+ */
 export function ApiPage(
   model: Model,
   options: Omit<DataOptions, 'array'> = {},
@@ -67,13 +81,11 @@ export function ApiPage(
       description: options.description ?? 'Thành công',
       schema: envelope({
         properties: {
+          ...PAGE_META.properties,
           items: { items: ref(model), type: 'array' },
-          page: { type: 'integer' },
-          pageCount: { type: 'integer' },
-          pageSize: { type: 'integer' },
-          total: { type: 'integer' },
+          meta: PAGE_META,
         },
-        required: ['items', 'total', 'page', 'pageSize', 'pageCount'],
+        required: ['items', 'meta', 'limit', 'page', 'total', 'totalPages'],
         type: 'object',
       }),
       status: options.status ?? 200,

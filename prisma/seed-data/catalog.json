@@ -1662,47 +1662,5 @@
       "sortOrder": 37,
       "stock": 60
     }
-  ],
-  "sizes": [
-    {
-      "code": "H5",
-      "heightMm": 50,
-      "id": "size-1",
-      "isActive": true,
-      "name": "5 cm",
-      "sortOrder": 1
-    },
-    {
-      "code": "H10",
-      "heightMm": 100,
-      "id": "size-2",
-      "isActive": true,
-      "name": "10 cm",
-      "sortOrder": 2
-    },
-    {
-      "code": "H15",
-      "heightMm": 150,
-      "id": "size-3",
-      "isActive": true,
-      "name": "15 cm",
-      "sortOrder": 3
-    },
-    {
-      "code": "H20",
-      "heightMm": 200,
-      "id": "size-4",
-      "isActive": true,
-      "name": "20 cm",
-      "sortOrder": 4
-    },
-    {
-      "code": "H30",
-      "heightMm": 300,
-      "id": "size-5",
-      "isActive": true,
-      "name": "30 cm",
-      "sortOrder": 5
-    }
   ]
 }

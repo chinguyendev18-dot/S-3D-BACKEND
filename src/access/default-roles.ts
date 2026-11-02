@@ -55,7 +55,6 @@ export const DEFAULT_ROLES: RoleSeed[] = [
       'admin.orders.manage',
       'admin.production.view',
       'admin.products.view',
-      'admin.templates.view',
       'admin.customers.manage',
       'admin.discounts.view',
     ],
@@ -69,7 +68,6 @@ export const DEFAULT_ROLES: RoleSeed[] = [
     permissions: [
       'admin.dashboard.view',
       'admin.products.manage',
-      'admin.templates.manage',
       'admin.blog.manage',
       'admin.content.manage',
     ],

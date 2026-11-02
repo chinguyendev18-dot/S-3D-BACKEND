@@ -69,6 +69,27 @@ export class StorageService {
     return `${this.publicBase}/${key.split('/').map(encodeURIComponent).join('/')}`;
   }
 
+  /**
+   * What to keep in the database for a picture or file a screen sends back: the R2 key when it is
+   * one of our public files (so a new public domain later changes every link at once), otherwise
+   * the value as given (an outside URL, or a path of the apps' own pictures).
+   */
+  toStored(value: string) {
+    const trimmed = value.trim();
+    const prefix = `${this.publicBase}/`;
+    if (!trimmed.startsWith(prefix)) return trimmed;
+    return trimmed
+      .slice(prefix.length)
+      .split('/')
+      .map((part) => decodeURIComponent(part))
+      .join('/');
+  }
+
+  /** The link to show for a stored value: R2 keys become public URLs, the rest stays. */
+  mediaUrl(stored: string) {
+    return stored.startsWith('public/') ? this.publicUrl(stored) : stored;
+  }
+
   /** The browser / app PUTs the file to this link, with this Content-Type and size only. */
   async signUpload(
     key: string,

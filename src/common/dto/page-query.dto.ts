@@ -12,8 +12,8 @@ import {
 export const MAX_PAGE_SIZE = 100;
 
 /**
- * `?page=1&pageSize=20&q=…&sort=-createdAt` for every list. Extend it with the list's own
- * filters; read it with pageArgs() (common/pagination.ts).
+ * `?page=1&limit=20&q=…&sort=-createdAt` for every list. Extend it with the list's own filters;
+ * read it with pageArgs() (common/pagination.ts).
  */
 export class PageQueryDto {
   /** From 1. */
@@ -23,7 +23,7 @@ export class PageQueryDto {
   @Min(1, { message: 'Trang bắt đầu từ 1.' })
   page?: number;
 
-  /** 1–100, 20 when left out. */
+  /** Rows per page: 1–100, 20 when left out. */
   @IsOptional()
   @Type(() => Number)
   @IsInt({ message: 'Số dòng mỗi trang phải là số nguyên.' })
@@ -31,7 +31,7 @@ export class PageQueryDto {
   @Max(MAX_PAGE_SIZE, {
     message: `Mỗi trang có nhiều nhất ${MAX_PAGE_SIZE} dòng.`,
   })
-  pageSize?: number;
+  limit?: number;
 
   /** Search text. */
   @IsOptional()

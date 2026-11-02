@@ -2,11 +2,13 @@
  * `npm run db:seed`: every step below, in order. Run again at any time: what exists stays.
  * One step only: `npm run db:seed -- --only=accounts` (several: --only=roles,accounts).
  *
- * The demo data the apps show (catalogue, blog, policies, shipping zones, discounts) is gathered
- * in prisma/seed-data/ (see index.ts there): each module adds its step here when its tables exist.
+ * The demo data the apps show (catalogue, blog, policies, shipping zones, discounts) comes from
+ * prisma/seed-data/ (see index.ts there); product photos are put on R2.
  */
 import { prisma, seedRoles } from './seed-tools';
 import { seedAccounts } from './seeds/accounts';
+import { seedCatalog } from './seeds/catalog';
+import { seedContent, seedDiscounts, seedShipping } from './seeds/content';
 
 interface SeedStep {
   name: string;
@@ -28,6 +30,10 @@ const STEPS: SeedStep[] = [
     run: seedAccounts,
     skip: () => process.env.SEED_SAMPLE_ACCOUNTS === 'false',
   },
+  { name: 'catalog', run: seedCatalog },
+  { name: 'content', run: seedContent },
+  { name: 'shipping', run: seedShipping },
+  { name: 'discounts', run: seedDiscounts },
 ];
 
 function chosenSteps() {

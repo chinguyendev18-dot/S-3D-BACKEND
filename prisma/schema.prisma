@@ -101,3 +101,261 @@ model AuditLog {
   @@index([targetId])
   @@map("audit_logs")
 }
+
+// ---------------------------------------------------------------------------------------------
+// Catalogue (GĐ2): what the shop sells and how a print is priced. Ids are text: the seed keeps the
+// demo's ids (cat-decor, prd-101, PLA, trang…), new rows get a uuid.
+
+/// A product's place in the shop: nhap = draft (staff only), dang_ban = on sale, an = hidden.
+enum ProductStatus {
+  nhap
+  dang_ban
+  an
+}
+
+/// co_dinh: a fixed price for the default height, scaled by volume; tu_dong: from material and time.
+enum PriceMode {
+  tu_dong
+  co_dinh
+}
+
+model ProductCategory {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String
+  description String    @default("")
+  sortOrder   Int       @default(0) @map("sort_order")
+  products    Product[]
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("product_categories")
+}
+
+/// A ready-made 3D model sold in the shop ("Sản phẩm mẫu" in the admin).
+model Product {
+  id              String           @id @default(uuid())
+  slug            String           @unique
+  sku             String           @unique
+  name            String
+  /// One line, shown on cards.
+  shortDesc       String           @default("") @map("short_desc")
+  /// HTML, shown on the product page.
+  description     String           @default("")
+  categoryId      String?          @map("category_id")
+  category        ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  status          ProductStatus    @default(nhap)
+  /// What lists show: the fixed price, or the computed one at the default height (VND).
+  price           Int              @default(0)
+  /// Struck-through "before" price, VND.
+  oldPrice        Int?             @map("old_price")
+  stock           Int              @default(0)
+  featured        Boolean          @default(false)
+  sortOrder       Int              @default(0) @map("sort_order")
+  tags            String[]
+  /// As customers read it, e.g. "PLA trắng".
+  material        String           @default("")
+  /// R2 key (public/…) or an absolute URL.
+  thumbnail       String           @default("")
+  images          String[]
+  priceMode       PriceMode        @default(co_dinh) @map("price_mode")
+  fixedPrice      Int?             @map("fixed_price")
+  /// Material ids offered (PLA, PETG, RESIN).
+  materials       String[]
+  defaultMaterial String           @default("PLA") @map("default_material")
+  /// Filament ids offered; empty: every filament of the material.
+  colors          String[]
+  defaultColor    String           @default("trang") @map("default_color")
+  defaultHeightMm Int              @default(100) @map("default_height_mm")
+  minHeightMm     Int              @default(40) @map("min_height_mm")
+  maxHeightMm     Int              @default(200) @map("max_height_mm")
+  upAxis          String           @default("y") @map("up_axis")
+  /// { size: { x, y, z }, volume } of the model at its original scale.
+  metrics         Json?
+  /// The 3D model: R2 key or URL, and its original file name (the loader needs the format).
+  modelUrl        String           @default("") @map("model_url")
+  modelFileName   String           @default("") @map("model_file_name")
+  modelSource     String           @default("tai_len") @map("model_source")
+  meshyPrompt     String           @default("") @map("meshy_prompt")
+  designId        String           @default("") @map("design_id")
+  workshopNote    String           @default("") @map("workshop_note")
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([categoryId])
+  @@index([status])
+  @@map("products")
+}
+
+/// PLA, PETG, RESIN: what a gram costs and how fast it prints.
+model PrintMaterial {
+  id           String  @id
+  label        String
+  /// g/cm³
+  density      Float
+  /// Share of the solid volume actually printed (walls + infill / hollowing).
+  fill         Float
+  gramsPerHour Float   @map("grams_per_hour")
+  pricePerGram Int     @map("price_per_gram")
+  sortOrder    Int     @default(0) @map("sort_order")
+  isActive     Boolean @default(true) @map("is_active")
+
+  @@map("print_materials")
+}
+
+/// A filament colour of the workshop, for the materials it exists in.
+model Filament {
+  id        String   @id
+  name      String
+  hex       String
+  materials String[]
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+
+  @@map("filaments")
+}
+
+/// A printer bed or resin tray: the largest piece printed in one go.
+model PrintArea {
+  id        String  @id @default(uuid())
+  code      String  @unique
+  name      String
+  widthCm   Float   @map("width_cm")
+  heightCm  Float   @map("height_cm")
+  sortOrder Int     @default(0) @map("sort_order")
+  isActive  Boolean @default(true) @map("is_active")
+
+  @@map("print_areas")
+}
+
+/// Small settings edited as a whole, e.g. "print_pricing".
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("settings")
+}
+
+// ---------------------------------------------------------------------------------------------
+// Content (GĐ2): blog, policies.
+
+model BlogCategory {
+  id        String     @id @default(uuid())
+  name      String
+  slug      String     @unique
+  index     Int        @default(0)
+  posts     BlogPost[]
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("blog_categories")
+}
+
+model BlogPost {
+  id          String        @id @default(uuid())
+  categoryId  String?       @map("category_id")
+  category    BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  title       String
+  slug        String        @unique
+  description String        @default("")
+  /// HTML.
+  content     String        @default("")
+  /// R2 key or URL.
+  thumbnail   String        @default("")
+  index       Int           @default(0)
+  published   Boolean       @default(true)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([categoryId])
+  @@map("blog_posts")
+}
+
+/// One section of a policy page (terms_of_service, privacy_policy, cookie_policy,
+/// ai_content_policy, return_refund_policy) or one FAQ entry (faq).
+model LegalDocument {
+  id        String   @id @default(uuid())
+  type      String
+  title     String
+  /// HTML.
+  content   String
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([type])
+  @@map("legal_documents")
+}
+
+// ---------------------------------------------------------------------------------------------
+// Shipping and discounts (GĐ2: kept and edited; used at checkout from GĐ3).
+
+model Country {
+  /// ISO 3166-1 alpha-2, e.g. VN.
+  code     String @id
+  name     String
+  iso3     String @default("")
+  currency String @default("VND")
+
+  @@map("countries")
+}
+
+model ShippingZone {
+  id                  String   @id @default(uuid())
+  name                String
+  code                String   @default("")
+  /// country, eu_us, row, unsupported (the admin's zone kinds).
+  type                String   @default("country")
+  countryCodes        String[] @map("country_codes")
+  /// VND for the first item of an order, and for each one after it.
+  firstItemPrice      Int      @default(0) @map("first_item_price")
+  additionalItemPrice Int      @default(0) @map("additional_item_price")
+  estimatedDays       String   @default("") @map("estimated_days")
+  sortOrder           Int      @default(0) @map("sort_order")
+  isActive            Boolean  @default(true) @map("is_active")
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("shipping_zones")
+}
+
+enum DiscountType {
+  percent
+  fixed
+  free_shipping
+}
+
+enum DiscountScope {
+  all
+  category
+  material
+}
+
+model Discount {
+  id               String        @id @default(uuid())
+  code             String        @unique
+  name             String
+  description      String        @default("")
+  type             DiscountType
+  /// Percent (1–100) or VND, ignored for free shipping.
+  value            Int           @default(0)
+  scope            DiscountScope @default(all)
+  categoryIds      String[]      @map("category_ids")
+  materials        String[]
+  /// Sales channels it works in; empty: all.
+  channels         String[]
+  minOrder         Int           @default(0) @map("min_order")
+  /// 0: no cap / unlimited.
+  maxDiscount      Int           @default(0) @map("max_discount")
+  usageLimit       Int           @default(0) @map("usage_limit")
+  perCustomerLimit Int           @default(0) @map("per_customer_limit")
+  usedCount        Int           @default(0) @map("used_count")
+  startsAt         DateTime?     @map("starts_at") @db.Timestamptz(3)
+  endsAt           DateTime?     @map("ends_at") @db.Timestamptz(3)
+  isActive         Boolean       @default(true) @map("is_active")
+  createdAt        DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("discounts")
+}

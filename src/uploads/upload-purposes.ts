@@ -19,6 +19,7 @@ const BINARY = 'application/octet-stream';
 const MODELS: FileTypes = {
   '3mf': ['model/3mf', BINARY],
   glb: ['model/gltf-binary', BINARY],
+  gltf: ['model/gltf+json', 'application/json', BINARY],
   obj: ['model/obj', 'text/plain', BINARY],
   stl: ['model/stl', 'application/sla', 'application/vnd.ms-pki.stl', BINARY],
 };
@@ -75,6 +76,14 @@ export const UPLOAD_PURPOSES = {
     types: { ...IMAGES, ...DOCUMENTS },
     visibility: 'private',
   },
+  /** The 3D model of a product in the shop: customers turn it around on the product page. */
+  'product-model': {
+    allowed: ['admin.products.manage'],
+    label: 'Mô hình 3D sản phẩm',
+    maxBytes: 100 * MB,
+    types: MODELS,
+    visibility: 'public',
+  },
   'product-image': {
     allowed: ['admin.products.manage'],
     label: 'Ảnh sản phẩm',
@@ -95,13 +104,6 @@ export const UPLOAD_PURPOSES = {
     maxBytes: 10 * MB,
     types: { ...IMAGES, ...DOCUMENTS },
     visibility: 'private',
-  },
-  'template-image': {
-    allowed: ['admin.templates.manage'],
-    label: 'Ảnh mẫu thiết kế',
-    maxBytes: 10 * MB,
-    types: IMAGES,
-    visibility: 'public',
   },
 } as const satisfies Record<string, UploadPurpose>;
 

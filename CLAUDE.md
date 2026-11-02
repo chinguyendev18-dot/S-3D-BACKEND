@@ -3,8 +3,9 @@
 NestJS 11 · TypeScript · class-validator · Jest · Prisma 7 (adapter-pg) · Supabase Auth. npm (có `package-lock.json`).
 Cổng 4000, tiền tố `api/v1`.
 
-Đã có: **đăng nhập + phân quyền** cho cả 4 app, và hạ tầng dùng chung (GĐ1): tài liệu OpenAPI, phân trang, upload R2, realtime,
-bộ dữ liệu seed. Các phần khác (sản phẩm, đơn...) vẫn là dữ liệu demo ở từng app.
+Đã có: **đăng nhập + phân quyền** cho cả 4 app; hạ tầng dùng chung (GĐ1: OpenAPI, phân trang, upload R2, realtime, seed);
+**danh mục & nội dung** (GĐ2: sản phẩm, danh mục, cỡ, vùng in, vật liệu/màu/giá in, mẫu, blog, chính sách/FAQ, vận chuyển, mã giảm giá).
+Đơn hàng, giỏ, khách hàng… vẫn là dữ liệu demo ở từng app (GĐ3).
 
 ## Lệnh
 
@@ -50,7 +51,14 @@ Không in / chép khoá ra ngoài file `.env`.
 - `src/realtime/` — socket.io namespace `/realtime` (cùng cổng). Mở bằng vé 60 giây dùng một lần (`POST /realtime/ticket`, app gửi
   `auth: { token }` hoặc `?token=`); phòng `user:<id>` và `app:<shop|admin|workshop>`; kiểm tra lại mỗi phút (khoá tài khoản → ngắt).
   Sự kiện và payload: `realtime.events.ts`.
-- `prisma/` — schema, migrations, `seed.ts` (các bước), `seeds/` (mỗi bước một file), `seed-data/` (dữ liệu demo gom từ 3 app:
+- `src/catalog/` — `/products/categories`, `/products` (khách: chỉ hàng đang bán; ai có `admin.products.view`: tất cả), `/products/:id`
+  (id hoặc slug, kèm biến thể màu × chiều cao), `/print-areas` (bàn in của máy), `/print-options` (vật liệu, màu nhựa, đơn giá;
+  `PUT` thay cả bộ). Giá: `pricing.ts` (chuyển từ Web/Admin); `product-view.ts` trả một dạng cho cả Web (productColors, sizes, variants,
+  template) và Admin (status, colors = mã màu, longDescription, model…). Ảnh/mô hình lưu key R2 (`StorageService.toStored` / `mediaUrl`).
+- `src/content/` — `/blog-categories` (+ `/:id/blog-posts`), `/blog-posts`,
+  `/legal-documents` (chính sách: mỗi dòng một mục; `faq`: mỗi dòng một câu hỏi).
+- `src/shipping/` — `/countries`, `/shipping/zones` (sửa cần `admin.orders.manage`). `src/discounts/` — `/discounts` (`admin.discounts.*`).
+- `prisma/` — schema, migrations, `seed.ts` (các bước: roles, accounts, catalog, content, shipping, discounts), `seeds/` (mỗi bước một file), `seed-data/` (dữ liệu demo gom từ 3 app:
   catalog, content, shipping, discounts + ảnh sản phẩm; kiểu ở `seed-data/index.ts`), `create-admin.ts`.
 
 ## Phân quyền

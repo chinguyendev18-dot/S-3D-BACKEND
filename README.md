@@ -13,7 +13,7 @@ Backend API dùng chung cho bốn ứng dụng trong hệ thống S-3D:
 npm install            # cài thư viện + sinh Prisma Client
 copy .env.example .env # rồi điền khoá Supabase / R2 / Firebase
 npm run db:migrate     # tạo bảng (users, roles, workshop_profiles, audit_logs)
-npm run db:seed        # vai trò mặc định + tài khoản mẫu (một bước: npm run db:seed -- --only=roles)
+npm run db:seed        # vai trò, tài khoản mẫu, danh mục, nội dung, vận chuyển, mã giảm giá (một bước: npm run db:seed -- --only=catalog)
 npm run start:dev
 ```
 
@@ -82,6 +82,7 @@ Chạy nhiều server backend thì đặt `REALTIME_SECRET` giống nhau và th�
 
 ## Dữ liệu demo dùng chung (`prisma/seed-data/`)
 
-Danh mục, sản phẩm (37) + thông số in, vật liệu, màu nhựa, cách tính giá, blog, chính sách, FAQ, mẫu thiết kế, vùng vận chuyển,
-34 tỉnh thành, mã giảm giá và ảnh sản phẩm, gom từ dữ liệu giả của Web, Admin, App (31/10/2026). Mỗi module của giai đoạn 2–3 thêm một
-bước vào `prisma/seed.ts` đọc phần của mình từ đây, để 3 app thấy cùng một bộ dữ liệu.
+Danh mục, sản phẩm (37) + thông số in, vật liệu, màu nhựa, cách tính giá, blog, chính sách, FAQ, vùng vận chuyển,
+34 tỉnh thành, mã giảm giá và ảnh sản phẩm, gom từ dữ liệu giả của Web, Admin, App (31/10/2026). Các bước seed `catalog`, `content`,
+`shipping`, `discounts` đọc từ đây (ảnh sản phẩm đưa lên bucket public của R2). Chạy lại bất cứ lúc nào: chỉ thêm dòng còn thiếu,
+không ghi đè chỗ đã sửa trong Admin.

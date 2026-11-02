@@ -3,9 +3,8 @@
  * what each app had on its own:
  * - catalog.json: categories, products and their print settings (storefront S-3D-FRONTEND
  *   lib/s3d-catalog.ts, the list the app also used), materials, filament colours and pricing
- *   (features/products/lib/print-quote.ts), sizes and print areas (admin demo);
- * - content.json: blog (storefront), policies (storefront /api/legal-documents), FAQ and design
- *   templates (admin demo);
+ *   (features/products/lib/print-quote.ts), printer beds (admin demo);
+ * - content.json: blog (storefront), policies (storefront /api/legal-documents), FAQ (admin demo);
  * - shipping.json: countries and zones (admin demo), the 34 provinces (app);
  * - discounts.json: discount codes (admin demo);
  * - images/products: the product photos (storefront public/images/Products/web), to upload to R2.
@@ -100,14 +99,6 @@ export interface SeedCatalog {
     sortOrder: number;
     stock: number;
   }[];
-  sizes: {
-    code: string;
-    heightMm: number;
-    id: string;
-    isActive: boolean;
-    name: string;
-    sortOrder: number;
-  }[];
 }
 
 export interface SeedContent {
@@ -131,21 +122,6 @@ export interface SeedContent {
   faq: { answer: string; question: string; sortOrder: number }[];
   /** One HTML document per type: terms_of_service, privacy_policy, cookie_policy… */
   legalDocuments: { content: string; title: string; type: string }[];
-  templateCategories: {
-    description: string;
-    id: string;
-    name: string;
-    slug: string;
-    sortOrder: number;
-  }[];
-  templates: {
-    categoryId: string;
-    id: string;
-    image: string | null;
-    isActive: boolean;
-    name: string;
-    sortOrder: number;
-  }[];
 }
 
 export interface SeedShipping {

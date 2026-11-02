@@ -9,9 +9,9 @@ import { pageArgs, toPage } from './pagination';
 describe('pagination', () => {
   it('starts on page 1 with 20 rows, sorted the default way', () => {
     expect(pageArgs({}, ['createdAt', 'name'], '-createdAt')).toEqual({
+      limit: 20,
       orderBy: { createdAt: 'desc' },
       page: 1,
-      pageSize: 20,
       search: undefined,
       skip: 0,
       take: 20,
@@ -20,7 +20,7 @@ describe('pagination', () => {
 
   it('reads the page, size, search and sort it is given', () => {
     const args = pageArgs(
-      { page: 3, pageSize: 10, q: '  đèn ngủ ', sort: 'name' },
+      { limit: 10, page: 3, q: '  đèn ngủ ', sort: 'name' },
       ['createdAt', 'name'],
       '-createdAt',
     );
@@ -38,28 +38,27 @@ describe('pagination', () => {
     ).toThrow(/Không sắp xếp được theo "passwordHash"/);
   });
 
-  it('counts pages, with at least one', () => {
-    expect(toPage([], 0, { page: 1, pageSize: 20 }).pageCount).toBe(1);
-    expect(toPage([1, 2], 41, { page: 3, pageSize: 20 })).toEqual({
+  it('counts pages, with at least one, at the top and in meta', () => {
+    expect(toPage([], 0, { limit: 20, page: 1 }).totalPages).toBe(1);
+    const meta = { limit: 20, page: 3, total: 41, totalPages: 3 };
+    expect(toPage([1, 2], 41, { limit: 20, page: 3 })).toEqual({
+      ...meta,
       items: [1, 2],
-      page: 3,
-      pageCount: 3,
-      pageSize: 20,
-      total: 41,
+      meta,
     });
   });
 
   it('turns query strings into numbers and checks them', async () => {
-    const ok = plainToInstance(PageQueryDto, { page: '2', pageSize: '50' });
+    const ok = plainToInstance(PageQueryDto, { limit: '50', page: '2' });
     expect(await validate(ok)).toHaveLength(0);
-    expect(ok).toMatchObject({ page: 2, pageSize: 50 });
+    expect(ok).toMatchObject({ limit: 50, page: 2 });
 
     const bad = plainToInstance(PageQueryDto, {
+      limit: '500',
       page: '0',
-      pageSize: '500',
       sort: 'name;drop',
     });
     const fields = (await validate(bad)).map((error) => error.property);
-    expect(fields.sort()).toEqual(['page', 'pageSize', 'sort']);
+    expect(fields.sort()).toEqual(['limit', 'page', 'sort']);
   });
 });

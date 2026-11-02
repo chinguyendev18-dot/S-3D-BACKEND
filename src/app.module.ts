@@ -9,12 +9,16 @@ import { AccountsModule } from './accounts/accounts.module';
 import { AppController } from './app.controller';
 import { AuditModule } from './audit/audit.module';
 import { AuthModule } from './auth/auth.module';
+import { CatalogModule } from './catalog/catalog.module';
 import { HttpExceptionFilter } from './common/http-exception.filter';
 import { ResponseInterceptor } from './common/response.interceptor';
 import { createValidationPipe } from './common/validation';
+import { ContentModule } from './content/content.module';
+import { DiscountsModule } from './discounts/discounts.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { RealtimeModule } from './realtime/realtime.module';
 import { RolesModule } from './roles/roles.module';
+import { ShippingModule } from './shipping/shipping.module';
 import { StorageModule } from './storage/storage.module';
 import { SupabaseModule } from './supabase/supabase.module';
 import { UploadsModule } from './uploads/uploads.module';
@@ -35,6 +39,10 @@ import { UploadsModule } from './uploads/uploads.module';
     StorageModule,
     UploadsModule,
     RealtimeModule,
+    CatalogModule,
+    ContentModule,
+    ShippingModule,
+    DiscountsModule,
   ],
   controllers: [AppController],
   providers: [
