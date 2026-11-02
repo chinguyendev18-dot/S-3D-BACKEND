@@ -41,6 +41,7 @@ Không in / chép khoá ra ngoài file `.env`.
   oauth/start + oauth/exchange (Google / Apple qua Supabase OAuth + PKCE, cho web; `redirectTo` phải thuộc CLIENT_ORIGINS). Giới hạn số lần thử trong bộ nhớ.
 - `src/roles/` — `/permissions`, `/roles` (CRUD). `src/accounts/` — `/accounts` (tài khoản nhân viên, cho Admin) và `/workshop/staff` (cho Xưởng).
 - `src/audit/` — bảng `audit_logs` + `GET /audit-logs`. `src/common/` — dạng trả về `{ success, data, message?, messageCode? }`, lỗi
+- Ghi nhật ký cho một thao tác của nhân viên: đặt `@Audited({ action, summary, target })` (`src/audit/audited.ts`) lên route; `AuditInterceptor` ghi sau khi thành công. `PUT /print-options` kiểm tra dữ liệu (400) và không cho bỏ thứ sản phẩm đang dùng (409).
   `{ success: false, statusCode, message, messageCode, details? }` (message tiếng Việt), validation, rate limit.
 - `src/openapi/` — Swagger: `/api/v1/docs` (UI), `/api/v1/docs-json`; `npm run openapi` ghi `openapi.json` (commit cùng code).
   Plugin Swagger trong `nest-cli.json` tự đọc field của mọi file `*.dto.ts` (kể cả comment) — chỉ chạy khi `nest build`.

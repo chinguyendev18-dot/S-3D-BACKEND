@@ -11,6 +11,7 @@ import {
 
 import { Public, RequirePermissions } from '../access/decorators';
 import { PageQueryDto } from '../common/dto/page-query.dto';
+import { Audited } from '../audit/audited';
 import { ApiData, ApiPage } from '../openapi/api-data.decorator';
 import {
   CountryViewDto,
@@ -49,6 +50,7 @@ export class ShippingController {
     return this.shipping.zone(id);
   }
 
+  @Audited({ action: 'shipping_zone.created', summary: (name) => `Tạo vùng giao hàng “${name}”`, target: 'shipping_zone' })
   @Post('shipping/zones')
   @RequirePermissions(MANAGE)
   @ApiData(ShippingZoneViewDto, { status: 201 })
@@ -56,6 +58,7 @@ export class ShippingController {
     return this.shipping.createZone(dto);
   }
 
+  @Audited({ action: 'shipping_zone.updated', summary: (name) => `Sửa vùng giao hàng “${name}”`, target: 'shipping_zone' })
   @Patch('shipping/zones/:id')
   @RequirePermissions(MANAGE)
   @ApiData(ShippingZoneViewDto)
@@ -63,6 +66,7 @@ export class ShippingController {
     return this.shipping.updateZone(id, dto);
   }
 
+  @Audited({ action: 'shipping_zone.deleted', summary: (id) => `Xoá vùng giao hàng ${id}`, target: 'shipping_zone' })
   @Delete('shipping/zones/:id')
   @RequirePermissions(MANAGE)
   @ApiData(null)

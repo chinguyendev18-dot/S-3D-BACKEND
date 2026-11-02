@@ -7,6 +7,7 @@ import { AuthGuard } from './access/auth.guard';
 import { PermissionsGuard } from './access/permissions.guard';
 import { AccountsModule } from './accounts/accounts.module';
 import { AppController } from './app.controller';
+import { AuditInterceptor } from './audit/audited';
 import { AuditModule } from './audit/audit.module';
 import { AuthModule } from './auth/auth.module';
 import { CatalogModule } from './catalog/catalog.module';
@@ -51,6 +52,8 @@ import { UploadsModule } from './uploads/uploads.module';
     { provide: APP_GUARD, useClass: PermissionsGuard },
     { provide: APP_PIPE, useFactory: createValidationPipe },
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
+    // Inside the response wrapper: it sees what the route answered.
+    { provide: APP_INTERCEPTOR, useClass: AuditInterceptor },
     { provide: APP_FILTER, useClass: HttpExceptionFilter },
   ],
 })

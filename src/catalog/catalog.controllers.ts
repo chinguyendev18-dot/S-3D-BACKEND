@@ -15,6 +15,7 @@ import type { Request } from 'express';
 import type { AuthUser } from '../access/auth-user';
 import { CurrentUser, Public, RequirePermissions } from '../access/decorators';
 import { requestMeta } from '../common/request-meta';
+import { Audited } from '../audit/audited';
 import { ApiData, ApiPage } from '../openapi/api-data.decorator';
 import { CategoriesService } from './categories.service';
 import {
@@ -161,6 +162,7 @@ export class PrintAreasController {
     return this.areas.list();
   }
 
+  @Audited({ action: 'print_area.created', summary: (name) => `Thêm bàn in “${name}”`, target: 'print_area' })
   @Post()
   @RequirePermissions(MANAGE)
   @ApiData(PrintAreaViewDto, { status: 201 })
@@ -168,6 +170,7 @@ export class PrintAreasController {
     return this.areas.create(dto);
   }
 
+  @Audited({ action: 'print_area.updated', summary: (name) => `Sửa bàn in “${name}”`, target: 'print_area' })
   @Patch(':id')
   @RequirePermissions(MANAGE)
   @ApiData(PrintAreaViewDto)
@@ -175,6 +178,7 @@ export class PrintAreasController {
     return this.areas.update(id, dto);
   }
 
+  @Audited({ action: 'print_area.deleted', summary: (id) => `Xoá bàn in ${id}`, target: 'print_area' })
   @Delete(':id')
   @RequirePermissions(MANAGE)
   @ApiData(null)
@@ -196,6 +200,7 @@ export class PrintOptionsController {
   }
 
   /** Replaces all of it; materials and colours left out are switched off, not deleted. */
+  @Audited({ action: 'print_options.updated', summary: () => 'Sửa vật liệu, màu nhựa và đơn giá in', target: 'print_options' })
   @Put()
   @RequirePermissions(MANAGE)
   @ApiData(PrintOptionsDto)

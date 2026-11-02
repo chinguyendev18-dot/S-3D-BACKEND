@@ -63,7 +63,7 @@ export const DEFAULT_ROLES: RoleSeed[] = [
   {
     key: 'content',
     name: 'Biên tập nội dung',
-    description: 'Sản phẩm, mẫu thiết kế, blog và các trang thông tin.',
+    description: 'Sản phẩm, blog và các trang thông tin.',
     scope: 'admin',
     permissions: [
       'admin.dashboard.view',
