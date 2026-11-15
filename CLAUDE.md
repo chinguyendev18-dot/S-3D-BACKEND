@@ -32,6 +32,26 @@ như migration đầu (Supabase mở schema public qua Data API bằng publishab
 `API_DOCS` (trang /api/v1/docs; mặc định bật trừ production), `REALTIME_SECRET` (ký vé socket; cần khi chạy nhiều server).
 Không in / chép khoá ra ngoài file `.env`.
 
+### Supabase chạy trên máy (tạm thời, từ 13/11/2026)
+
+Project Supabase online hết hạn nên `.env` đang trỏ tới **Supabase local** (Docker, cấu hình `supabase/config.toml`); `.env` của
+bản online giữ ở `.env.supabase-cloud` (git bỏ qua). Không phải sửa code: cùng Postgres 17 + Supabase Auth.
+
+```bash
+npm run supabase:start     # bật Docker Desktop trước; chỉ chạy Postgres, Auth, Studio, hộp thư giả
+npm run supabase:stop      # dữ liệu vẫn giữ trong volume Docker
+npm run supabase:status    # địa chỉ, khoá (đừng in khoá ra chỗ khác)
+```
+
+- Postgres `127.0.0.1:54322` (`DATABASE_SSL=false`), API/Auth `http://127.0.0.1:54321`, Studio `http://127.0.0.1:54323`,
+  email (mã OTP đăng ký / quên mật khẩu, không gửi thật) ở Mailpit `http://127.0.0.1:54324`.
+- Cấu hình Auth như bản online: xác nhận email bằng mã 6 số, hết hạn 1 giờ, mẫu email `supabase/email-templates`. Riêng
+  `email_sent = 100` mỗi giờ (mặc định local là 2). Google / Apple chưa bật ở local. Token ký HS256 (online: ES256), nên
+  `getClaims` hỏi Auth local mỗi lần kiểm tra token.
+- DB mới tạo: `npm run db:migrate` rồi `npm run db:seed` (tài khoản mẫu như README; ảnh sản phẩm vẫn ở R2).
+- Quay lại bản online: `cp .env.supabase-cloud .env`, rồi `npm run db:migrate` (migration mới làm ở local). Dữ liệu tạo ở
+  local không tự sang: cần thì `pg_dump` schema `public` (và người dùng của `auth`) rồi nạp vào bản online.
+
 ## Cấu trúc
 
 - `src/access/` — danh sách quyền (`permissions.ts`), vai trò mặc định (`default-roles.ts`), `AuthGuard` (mọi route cần token trừ `@Public()`),
