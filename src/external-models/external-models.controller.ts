@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
@@ -14,7 +16,9 @@ import type { AuthUser } from '../access/auth-user';
 import { CurrentUser, RequirePermissions } from '../access/decorators';
 import { requestMeta } from '../common/request-meta';
 import { ApiData, ApiPage } from '../openapi/api-data.decorator';
+import { DownloadLinkDto } from '../uploads/dto/upload.dto';
 import {
+  AddExternalModelFileDto,
   CreateExternalModelDto,
   ExternalModelDetailDto,
   ExternalModelQueryDto,
@@ -112,5 +116,41 @@ export class ExternalModelsController {
     @Req() request: Request,
   ) {
     return this.models.update(user, id, dto, requestMeta(request));
+  }
+
+  /** Attach a print file (3MF, STL, STEP, zip…) uploaded with POST /uploads (external-model-file). */
+  @Post(':id/files')
+  @RequirePermissions(MANAGE)
+  @ApiData(ExternalModelDetailDto, { status: 201 })
+  addFile(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+    @Body() dto: AddExternalModelFileDto,
+    @Req() request: Request,
+  ) {
+    return this.models.addFile(user, id, dto, requestMeta(request));
+  }
+
+  /** A short-lived link that downloads the file under its own name. */
+  @Get(':id/files/:fileId/download')
+  @RequirePermissions(VIEW)
+  @ApiData(DownloadLinkDto)
+  fileLink(
+    @Param('id') id: string,
+    @Param('fileId', ParseUUIDPipe) fileId: string,
+  ) {
+    return this.models.fileLink(id, fileId);
+  }
+
+  @Delete(':id/files/:fileId')
+  @RequirePermissions(MANAGE)
+  @ApiData(ExternalModelDetailDto)
+  removeFile(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+    @Param('fileId', ParseUUIDPipe) fileId: string,
+    @Req() request: Request,
+  ) {
+    return this.models.removeFile(user, id, fileId, requestMeta(request));
   }
 }

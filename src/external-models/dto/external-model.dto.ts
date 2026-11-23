@@ -287,6 +287,8 @@ export class ExternalModelViewDto {
   images: ExternalModelImageDto[];
   @ApiProperty({ type: () => [ExternalModelProfileDto] })
   profiles: ExternalModelProfileDto[];
+  /** Print files uploaded for the workshop (GET :id lists them). */
+  fileCount: number;
   licenseCode: string;
   licenseLabel: string;
   @ApiProperty({ enum: LICENSE_VERDICTS })
@@ -315,8 +317,53 @@ export class ExternalModelViewDto {
   updatedAt: string;
 }
 
+/** A print file uploaded with POST /uploads (purpose external-model-file), attached to a model. */
+export class AddExternalModelFileDto {
+  @Transform(trim)
+  @IsString({ message: 'Tệp in không hợp lệ.' })
+  @IsNotEmpty({ message: 'Thiếu tệp in.' })
+  @MaxLength(300, { message: 'Tệp in không hợp lệ.' })
+  key: string;
+
+  /** The name the file had on the computer: given back when it is downloaded. */
+  @Transform(trim)
+  @IsString({ message: 'Tên tệp không hợp lệ.' })
+  @IsNotEmpty({ message: 'Thiếu tên tệp.' })
+  @MaxLength(200, { message: 'Tên tệp tối đa 200 ký tự.' })
+  fileName: string;
+
+  /** Which of the site's print profiles it is, if any. */
+  @IsOptional()
+  @Transform(trim)
+  @IsString({ message: 'Tên bản in không hợp lệ.' })
+  @MaxLength(200, { message: 'Tên bản in tối đa 200 ký tự.' })
+  profileName?: string;
+
+  @IsOptional()
+  @Transform(trim)
+  @IsString({ message: 'Ghi chú không hợp lệ.' })
+  @MaxLength(500, { message: 'Ghi chú tối đa 500 ký tự.' })
+  note?: string;
+}
+
+export class ExternalModelFileDto {
+  id: string;
+  fileName: string;
+  /** The extension, lower case: "3mf", "stl", "zip"… */
+  format: string;
+  sizeBytes: number;
+  profileName: string;
+  note: string;
+  uploadedByName: string;
+  @ApiProperty({ format: 'date-time' })
+  createdAt: string;
+}
+
 export class ExternalModelDetailDto extends ExternalModelViewDto {
   /** Newest first. */
   @ApiProperty({ type: () => [LicenseCheckViewDto] })
   checks: LicenseCheckViewDto[];
+  /** The files the workshop prints from, newest first. */
+  @ApiProperty({ type: () => [ExternalModelFileDto] })
+  files: ExternalModelFileDto[];
 }

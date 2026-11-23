@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 import type { AuthUser } from '../access/auth-user';
 import { AuditService } from '../audit/audit.service';
@@ -8,14 +8,18 @@ import type { RequestMeta } from '../common/request-meta';
 import type {
   ExternalModel,
   ExternalModelCheck,
+  ExternalModelFile,
   Prisma,
 } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../storage/storage.service';
 import { UploadsService } from '../uploads/uploads.service';
+import type { DownloadLinkDto } from '../uploads/dto/upload.dto';
 import type {
+  AddExternalModelFileDto,
   CreateExternalModelDto,
   ExternalModelDetailDto,
+  ExternalModelFileDto,
   ExternalModelMediaDto,
   ExternalModelProfileDto,
   ExternalModelQueryDto,
@@ -43,6 +47,9 @@ const SORTABLE = ['checkedAt', 'createdAt', 'title'] as const;
 type Row = ExternalModel & {
   checks: Pick<ExternalModelCheck, 'checkedByName'>[];
 };
+
+const extensionOf = (key: string) =>
+  /.([a-z0-9]+)$/i.exec(key)?.[1]?.toLowerCase() ?? '';
 
 /** The check fields both tables share, once evaluated. */
 interface CheckData {
@@ -82,6 +89,8 @@ function profilesOf(value: Prisma.JsonValue): ExternalModelProfileDto[] {
 
 @Injectable()
 export class ExternalModelsService {
+  private readonly logger = new Logger(ExternalModelsService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly uploads: UploadsService,
@@ -129,7 +138,7 @@ export class ExternalModelsService {
     const where = this.where(query, args.search);
     const [rows, total] = await this.prisma.$transaction([
       this.prisma.externalModel.findMany({
-        include: this.latestChecker,
+        include: { ...this.latestChecker, _count: { select: { files: true } } },
         orderBy: args.orderBy,
         skip: args.skip,
         take: args.take,
@@ -138,7 +147,7 @@ export class ExternalModelsService {
       this.prisma.externalModel.count({ where }),
     ]);
     return toPage(
-      rows.map((row) => this.view(row)),
+      rows.map((row) => this.view(row, row._count.files)),
       total,
       args,
     );
@@ -164,13 +173,17 @@ export class ExternalModelsService {
 
   async get(id: string): Promise<ExternalModelDetailDto> {
     const row = await this.prisma.externalModel.findUnique({
-      include: { checks: { orderBy: { checkedAt: 'desc' } } },
+      include: {
+        checks: { orderBy: { checkedAt: 'desc' } },
+        files: { orderBy: { createdAt: 'desc' } },
+      },
       where: { id },
     });
     if (!row) throw this.notFound();
     return {
-      ...this.view(row),
+      ...this.view(row, row.files.length),
       checks: row.checks.map((check) => this.checkView(check)),
+      files: row.files.map((file) => this.fileView(file)),
     };
   }
 
@@ -303,6 +316,96 @@ export class ExternalModelsService {
       `Sửa thông tin mẫu ngoài “${row.title}”`,
     );
     return this.get(id);
+  }
+
+  /** Attaches a print file the person uploaded (POST /uploads, purpose external-model-file). */
+  async addFile(
+    user: AuthUser,
+    id: string,
+    dto: AddExternalModelFileDto,
+    meta: RequestMeta,
+  ) {
+    const model = await this.prisma.externalModel.findUnique({
+      select: { id: true, title: true },
+      where: { id },
+    });
+    if (!model) throw this.notFound();
+    const object = await this.uploads.assertUploaded(
+      user,
+      dto.key,
+      'external-model-file',
+    );
+    const taken = await this.prisma.externalModelFile.findUnique({
+      select: { id: true },
+      where: { key: dto.key },
+    });
+    if (taken) {
+      throw conflict(
+        'EXTERNAL_MODEL.FILE_EXISTS',
+        'Tệp này đã được gắn vào một mẫu.',
+      );
+    }
+    const file = await this.prisma.externalModelFile.create({
+      data: {
+        fileName: dto.fileName,
+        format: extensionOf(dto.key),
+        key: dto.key,
+        modelId: id,
+        note: dto.note ?? '',
+        profileName: dto.profileName ?? '',
+        sizeBytes: object.size,
+        uploadedById: user.id,
+        uploadedByName: user.name || user.email,
+      },
+    });
+    await this.record(
+      user,
+      meta,
+      'external_model.file_added',
+      model,
+      `Thêm tệp in “${file.fileName}” cho mẫu “${model.title}”`,
+    );
+    return this.get(id);
+  }
+
+  /** Removes a print file from the model, then from storage. */
+  async removeFile(
+    user: AuthUser,
+    id: string,
+    fileId: string,
+    meta: RequestMeta,
+  ) {
+    const file = await this.findFile(id, fileId);
+    await this.prisma.externalModelFile.delete({ where: { id: file.id } });
+    // The row is what the app reads; a file left in R2 only costs storage, so a failure here is logged.
+    await this.storage.remove(file.key).catch((error: unknown) => {
+      this.logger.warn(`Could not delete ${file.key}: ${String(error)}`);
+    });
+    await this.record(
+      user,
+      meta,
+      'external_model.file_removed',
+      file.model,
+      `Xoá tệp in “${file.fileName}” của mẫu “${file.model.title}”`,
+    );
+    return this.get(id);
+  }
+
+  /** A short-lived link that downloads the file under the name it was uploaded with. */
+  async fileLink(id: string, fileId: string): Promise<DownloadLinkDto> {
+    const file = await this.findFile(id, fileId);
+    return this.storage.signDownload(file.key, file.fileName);
+  }
+
+  private async findFile(id: string, fileId: string) {
+    const file = await this.prisma.externalModelFile.findFirst({
+      include: { model: { select: { id: true, title: true } } },
+      where: { id: fileId, modelId: id },
+    });
+    if (!file) {
+      throw notFound('EXTERNAL_MODEL.FILE_NOT_FOUND', 'Không tìm thấy tệp in.');
+    }
+    return file;
   }
 
   /**
@@ -458,7 +561,10 @@ export class ExternalModelsService {
     return and.length ? { AND: and } : {};
   }
 
-  private view(row: Row | (ExternalModel & { checks: ExternalModelCheck[] })) {
+  private view(
+    row: Row | (ExternalModel & { checks: ExternalModelCheck[] }),
+    fileCount: number,
+  ) {
     const membershipUntil = dateOnly(row.membershipUntil);
     const state = sellableState({
       basis: row.basis,
@@ -476,6 +582,7 @@ export class ExternalModelsService {
       creatorUrl: row.creatorUrl,
       description: row.description,
       externalId: row.externalId,
+      fileCount,
       images: row.images.map((key) => ({
         key,
         url: this.storage.mediaUrl(key),
@@ -500,6 +607,19 @@ export class ExternalModelsService {
       verdict: row.verdict,
     };
     return view;
+  }
+
+  private fileView(file: ExternalModelFile): ExternalModelFileDto {
+    return {
+      createdAt: file.createdAt.toISOString(),
+      fileName: file.fileName,
+      format: file.format,
+      id: file.id,
+      note: file.note,
+      profileName: file.profileName,
+      sizeBytes: file.sizeBytes,
+      uploadedByName: file.uploadedByName,
+    };
   }
 
   private checkView(check: ExternalModelCheck): LicenseCheckViewDto {

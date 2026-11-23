@@ -7873,6 +7873,325 @@
         ],
         "description": "Cần quyền: `admin.products.manage`."
       }
+    },
+    "/external-models/{id}/files": {
+      "post": {
+        "operationId": "ExternalModels_addFile",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddExternalModelFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelDetailDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "Attach a print file (3MF, STL, STEP, zip…) uploaded with POST /uploads (external-model-file).",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/external-models/{id}/files/{fileId}/download": {
+      "get": {
+        "operationId": "ExternalModels_fileLink",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DownloadLinkDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "A short-lived link that downloads the file under its own name.",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.view`."
+      }
+    },
+    "/external-models/{id}/files/{fileId}": {
+      "delete": {
+        "operationId": "ExternalModels_removeFile",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelDetailDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
     }
   },
   "info": {
@@ -8936,6 +9255,7 @@
               "blog-image",
               "content-image",
               "external-model-image",
+              "external-model-file",
               "license-evidence",
               "model",
               "order-artwork",
@@ -11430,6 +11750,10 @@
           "description": {
             "type": "string"
           },
+          "fileCount": {
+            "type": "number",
+            "description": "Print files uploaded for the workshop (GET :id lists them)."
+          },
           "licenseCode": {
             "type": "string"
           },
@@ -11469,6 +11793,7 @@
           "creatorName",
           "creatorUrl",
           "description",
+          "fileCount",
           "licenseCode",
           "licenseLabel",
           "sellable",
@@ -11543,6 +11868,47 @@
           "note",
           "acknowledgements",
           "checkedByName"
+        ]
+      },
+      "ExternalModelFileDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string",
+            "description": "The extension, lower case: \"3mf\", \"stl\", \"zip\"…"
+          },
+          "sizeBytes": {
+            "type": "number"
+          },
+          "profileName": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "uploadedByName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "createdAt",
+          "id",
+          "fileName",
+          "format",
+          "sizeBytes",
+          "profileName",
+          "note",
+          "uploadedByName"
         ]
       },
       "ExternalModelDetailDto": {
@@ -11621,6 +11987,13 @@
               "$ref": "#/components/schemas/LicenseCheckViewDto"
             }
           },
+          "files": {
+            "description": "The files the workshop prints from, newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelFileDto"
+            }
+          },
           "id": {
             "type": "string"
           },
@@ -11641,6 +12014,10 @@
           },
           "description": {
             "type": "string"
+          },
+          "fileCount": {
+            "type": "number",
+            "description": "Print files uploaded for the workshop (GET :id lists them)."
           },
           "licenseCode": {
             "type": "string"
@@ -11675,6 +12052,7 @@
           "createdAt",
           "updatedAt",
           "checks",
+          "files",
           "id",
           "externalId",
           "url",
@@ -11682,6 +12060,7 @@
           "creatorName",
           "creatorUrl",
           "description",
+          "fileCount",
           "licenseCode",
           "licenseLabel",
           "sellable",
@@ -11831,6 +12210,33 @@
             }
           }
         }
+      },
+      "AddExternalModelFileDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "fileName": {
+            "type": "string",
+            "description": "The name the file had on the computer: given back when it is downloaded.",
+            "maxLength": 200
+          },
+          "profileName": {
+            "type": "string",
+            "description": "Which of the site's print profiles it is, if any.",
+            "maxLength": 200
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "key",
+          "fileName"
+        ]
       },
       "ApiErrorDto": {
         "type": "object",

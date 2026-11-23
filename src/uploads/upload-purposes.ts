@@ -24,6 +24,21 @@ const MODELS: FileTypes = {
   stl: ['model/stl', 'application/sla', 'application/vnd.ms-pki.stl', BINARY],
 };
 
+/**
+ * What a shop downloads from MakerWorld / Printables… to print a model: slicer projects, meshes,
+ * CAD, ready G-code, or the zip the site packs them in.
+ */
+const PRINT_FILES: FileTypes = {
+  ...MODELS,
+  '7z': ['application/x-7z-compressed', BINARY],
+  amf: ['application/x-amf', 'application/xml', 'text/xml', BINARY],
+  gcode: ['text/x-gcode', 'text/plain', BINARY],
+  rar: ['application/vnd.rar', 'application/x-rar-compressed', BINARY],
+  step: ['model/step', 'application/step', 'application/stp', BINARY],
+  stp: ['model/step', 'application/step', 'application/stp', BINARY],
+  zip: ['application/zip', 'application/x-zip-compressed', BINARY],
+};
+
 export interface UploadPurpose {
   label: string;
   maxBytes: number;
@@ -69,6 +84,14 @@ export const UPLOAD_PURPOSES = {
     maxBytes: 10 * MB,
     types: IMAGES,
     visibility: 'public',
+  },
+  /** A file the workshop prints a MakerWorld / Printables model from: staff only, never customers. */
+  'external-model-file': {
+    allowed: ['admin.products.manage'],
+    label: 'Tệp in mẫu ngoài',
+    maxBytes: 300 * MB,
+    types: PRINT_FILES,
+    visibility: 'private',
   },
   /** A screenshot of a model's licence on MakerWorld / Printables…: the shop's proof it may sell prints. */
   'license-evidence': {

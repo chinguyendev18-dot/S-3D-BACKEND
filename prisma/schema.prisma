@@ -406,7 +406,8 @@ model ExternalModel {
   membershipUntil DateTime?            @map("membership_until") @db.Date
   checkedAt       DateTime             @map("checked_at") @db.Timestamptz(3)
   checks          ExternalModelCheck[]
-  createdAt       DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  files           ExternalModelFile[]
+  createdAt      DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt       DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@unique([source, externalId])
@@ -434,4 +435,28 @@ model ExternalModelCheck {
 
   @@index([modelId, checkedAt])
   @@map("external_model_checks")
+}
+
+/// A file the workshop prints the model from (3MF, STL, STEP, a zip…), downloaded from the site by
+/// staff and kept privately: never offered to customers.
+model ExternalModelFile {
+  id             String        @id @default(uuid()) @db.Uuid
+  modelId        String        @map("model_id")
+  model          ExternalModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  /// R2 key (private/external-model-file/...).
+  key            String        @unique
+  /// The name it had when downloaded, given back when the workshop downloads it.
+  fileName       String        @map("file_name")
+  /// The extension, lower case: "3mf", "stl", "zip"…
+  format         String
+  sizeBytes      Int           @map("size_bytes")
+  /// Which of the site's print profiles it is ("0.16mm, 2 vách…"), "" when not one.
+  profileName    String        @default("") @map("profile_name")
+  note           String        @default("")
+  uploadedById   String?       @map("uploaded_by_id") @db.Uuid
+  uploadedByName String        @default("") @map("uploaded_by_name")
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([modelId, createdAt])
+  @@map("external_model_files")
 }
