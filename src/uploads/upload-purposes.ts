@@ -62,6 +62,22 @@ export const UPLOAD_PURPOSES = {
     types: IMAGES,
     visibility: 'public',
   },
+  /** A photo of a MakerWorld / Printables model, copied to R2 so the shop never hotlinks their CDN. */
+  'external-model-image': {
+    allowed: ['admin.products.manage'],
+    label: 'Ảnh mẫu ngoài',
+    maxBytes: 10 * MB,
+    types: IMAGES,
+    visibility: 'public',
+  },
+  /** A screenshot of a model's licence on MakerWorld / Printables…: the shop's proof it may sell prints. */
+  'license-evidence': {
+    allowed: ['admin.products.manage'],
+    label: 'Ảnh chụp giấy phép mẫu',
+    maxBytes: 10 * MB,
+    types: { ...IMAGES, ...DOCUMENTS },
+    visibility: 'private',
+  },
   model: {
     allowed: 'anyone',
     label: 'Mô hình 3D',

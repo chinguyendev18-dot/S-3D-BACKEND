@@ -16,6 +16,7 @@ import { ResponseInterceptor } from './common/response.interceptor';
 import { createValidationPipe } from './common/validation';
 import { ContentModule } from './content/content.module';
 import { DiscountsModule } from './discounts/discounts.module';
+import { ExternalModelsModule } from './external-models/external-models.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { RealtimeModule } from './realtime/realtime.module';
 import { RolesModule } from './roles/roles.module';
@@ -44,6 +45,7 @@ import { UploadsModule } from './uploads/uploads.module';
     ContentModule,
     ShippingModule,
     DiscountsModule,
+    ExternalModelsModule,
   ],
   controllers: [AppController],
   providers: [

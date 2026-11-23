@@ -359,3 +359,79 @@ model Discount {
 
   @@map("discounts")
 }
+
+// ---------------------------------------------------------------------------------------------
+// Models from other sites (MakerWorld, Printables, Thingiverse) the shop wants to print for sale,
+// and the licence checks that say whether it may. Rules: src/external-models/licenses.ts.
+
+enum ExternalModelSource {
+  makerworld
+  printables
+  thingiverse
+}
+
+/// allowed: may be sold; limited: may be sold with a restriction (print unmodified); blocked: not.
+enum LicenseVerdict {
+  allowed
+  limited
+  blocked
+}
+
+/// What a check rests on: the model's licence, a creator membership, or written permission.
+enum LicenseCheckBasis {
+  license
+  membership
+  permission
+}
+
+model ExternalModel {
+  id              String               @id @default(uuid())
+  source          ExternalModelSource
+  /// The model's id on its site (makerworld.com/en/models/<id>).
+  externalId      String               @map("external_id")
+  url             String
+  title           String
+  creatorName     String               @default("") @map("creator_name")
+  creatorUrl      String               @default("") @map("creator_url")
+  /// Plain text (the site's HTML is turned into text by the admin): never rendered as HTML.
+  description     String               @default("")
+  /// R2 keys of the photos (public/external-model-image/...), the first is the cover.
+  images          String[]
+  /// The site's print profiles: [{ name, minutes, grams, plates, printers }], see ExternalModelProfileDto.
+  profiles        Json                 @default("[]")
+  /// Copied from the latest check, so lists filter without reading the history.
+  licenseCode     String               @map("license_code")
+  verdict         LicenseVerdict
+  basis           LicenseCheckBasis
+  membershipUntil DateTime?            @map("membership_until") @db.Date
+  checkedAt       DateTime             @map("checked_at") @db.Timestamptz(3)
+  checks          ExternalModelCheck[]
+  createdAt       DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([source, externalId])
+  @@index([verdict])
+  @@index([checkedAt])
+  @@map("external_models")
+}
+
+/// One look at a model's licence: never changed afterwards, it is the shop's proof.
+model ExternalModelCheck {
+  id               String            @id @default(uuid()) @db.Uuid
+  modelId          String            @map("model_id")
+  model            ExternalModel     @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  licenseCode      String            @map("license_code")
+  verdict          LicenseVerdict
+  basis            LicenseCheckBasis
+  membershipUntil  DateTime?         @map("membership_until") @db.Date
+  /// R2 key of the screenshot (private/license-evidence/...); "" for a blocked licence without one.
+  evidenceKey      String            @default("") @map("evidence_key")
+  note             String            @default("")
+  acknowledgements String[]
+  checkedById      String?           @map("checked_by_id") @db.Uuid
+  checkedByName    String            @default("") @map("checked_by_name")
+  checkedAt        DateTime          @default(now()) @map("checked_at") @db.Timestamptz(3)
+
+  @@index([modelId, checkedAt])
+  @@map("external_model_checks")
+}

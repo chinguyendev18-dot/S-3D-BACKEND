@@ -6914,6 +6914,965 @@
         ],
         "description": "Cần quyền: `admin.discounts.manage`."
       }
+    },
+    "/external-models/licenses": {
+      "get": {
+        "operationId": "ExternalModels_licenses",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/LicenseCatalogDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "Licences, their verdicts and the boxes a check needs. Before :id.",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.view`."
+      }
+    },
+    "/external-models/lookup": {
+      "get": {
+        "operationId": "ExternalModels_lookup",
+        "parameters": [
+          {
+            "name": "url",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "maxLength": 500,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ModelLookupDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "Which site and model a pasted link is, and whether it is already in the list.",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.view`."
+      }
+    },
+    "/external-models/summary": {
+      "get": {
+        "operationId": "ExternalModels_summary",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1.",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows per page: 1–100, 20 when left out.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Search text.",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "A field to sort by, \"-\" first for newest / largest first: `-createdAt`, `name`.",
+            "schema": {
+              "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "source",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "makerworld",
+                "printables",
+                "thingiverse"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sellable",
+                "blocked",
+                "recheck"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelSummaryDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "Counts per state, for the filter tiles. Before :id.",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.view`."
+      }
+    },
+    "/external-models": {
+      "get": {
+        "operationId": "ExternalModels_list",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "From 1.",
+            "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows per page: 1–100, 20 when left out.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Search text.",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "A field to sort by, \"-\" first for newest / largest first: `-createdAt`, `name`.",
+            "schema": {
+              "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "source",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "makerworld",
+                "printables",
+                "thingiverse"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sellable",
+                "blocked",
+                "recheck"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        },
+                        "items": {
+                          "items": {
+                            "$ref": "#/components/schemas/ExternalModelViewDto"
+                          },
+                          "type": "array"
+                        },
+                        "meta": {
+                          "properties": {
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "page": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "totalPages": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "limit",
+                            "page",
+                            "total",
+                            "totalPages"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "items",
+                        "meta",
+                        "limit",
+                        "page",
+                        "total",
+                        "totalPages"
+                      ],
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.view`."
+      },
+      "post": {
+        "operationId": "ExternalModels_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExternalModelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelDetailDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/external-models/{id}": {
+      "get": {
+        "operationId": "ExternalModels_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelDetailDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "With every check, newest first.",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.view`."
+      },
+      "patch": {
+        "operationId": "ExternalModels_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExternalModelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelDetailDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
+    },
+    "/external-models/{id}/checks": {
+      "post": {
+        "operationId": "ExternalModels_addCheck",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseCheckInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExternalModelDetailDto"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "messageCode": {
+                      "type": "string"
+                    },
+                    "success": {
+                      "enum": [
+                        true
+                      ],
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Chưa đăng nhập"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Không có quyền"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorDto"
+                }
+              }
+            },
+            "description": "Thử quá nhiều lần"
+          }
+        },
+        "summary": "Look at the licence again (creators can change it, memberships run out).",
+        "tags": [
+          "ExternalModels"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "description": "Cần quyền: `admin.products.manage`."
+      }
     }
   },
   "info": {
@@ -7976,6 +8935,8 @@
               "avatar",
               "blog-image",
               "content-image",
+              "external-model-image",
+              "license-evidence",
               "model",
               "order-artwork",
               "product-model",
@@ -10171,6 +11132,703 @@
           },
           "isActive": {
             "type": "boolean"
+          }
+        }
+      },
+      "LicenseOptionDto": {
+        "type": "object",
+        "properties": {
+          "verdict": {
+            "enum": [
+              "allowed",
+              "limited",
+              "blocked"
+            ],
+            "type": "string"
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "attribution",
+                "no_modification",
+                "share_alike"
+              ]
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "makerworld",
+                "printables",
+                "thingiverse"
+              ]
+            }
+          },
+          "code": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "verdict",
+          "requires",
+          "sources",
+          "code",
+          "label",
+          "note"
+        ]
+      },
+      "AcknowledgementOptionDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "label"
+        ]
+      },
+      "LicenseCatalogDto": {
+        "type": "object",
+        "properties": {
+          "licenses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LicenseOptionDto"
+            }
+          },
+          "acknowledgements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementOptionDto"
+            }
+          },
+          "recheckAfterDays": {
+            "type": "number",
+            "description": "Days after which a check should be done again."
+          }
+        },
+        "required": [
+          "licenses",
+          "acknowledgements",
+          "recheckAfterDays"
+        ]
+      },
+      "ModelLookupDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "enum": [
+              "makerworld",
+              "printables",
+              "thingiverse"
+            ],
+            "type": "string"
+          },
+          "existingId": {
+            "type": "string",
+            "nullable": true,
+            "description": "The model already in the list, if someone added it before."
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "existingId",
+          "externalId",
+          "url"
+        ]
+      },
+      "ExternalModelSummaryDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "sellable": {
+            "type": "number"
+          },
+          "blocked": {
+            "type": "number"
+          },
+          "recheck": {
+            "type": "number",
+            "description": "Old checks and memberships that ran out (some are also counted as blocked)."
+          }
+        },
+        "required": [
+          "total",
+          "sellable",
+          "blocked",
+          "recheck"
+        ]
+      },
+      "ExternalModelImageDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "R2 key, sent back unchanged to keep the photo when saving."
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "url"
+        ]
+      },
+      "ExternalModelProfileDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "minutes": {
+            "type": "number",
+            "description": "Print time the site predicts.",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          "grams": {
+            "type": "number",
+            "description": "Filament, all plates together; 0 when the site does not say.",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          "plates": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "printers": {
+            "description": "Printers it was made for (A1, P1S, X1 Carbon…).",
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 40
+            }
+          }
+        },
+        "required": [
+          "name",
+          "minutes",
+          "grams",
+          "plates",
+          "printers"
+        ]
+      },
+      "ExternalModelViewDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "enum": [
+              "makerworld",
+              "printables",
+              "thingiverse"
+            ],
+            "type": "string"
+          },
+          "images": {
+            "description": "The cover first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelImageDto"
+            }
+          },
+          "profiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelProfileDto"
+            }
+          },
+          "verdict": {
+            "enum": [
+              "allowed",
+              "limited",
+              "blocked"
+            ],
+            "type": "string"
+          },
+          "basis": {
+            "enum": [
+              "license",
+              "membership",
+              "permission"
+            ],
+            "type": "string"
+          },
+          "membershipUntil": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "requires": {
+            "type": "array",
+            "description": "Conditions the shop keeps while selling (credit the creator…).",
+            "items": {
+              "type": "string",
+              "enum": [
+                "attribution",
+                "no_modification",
+                "share_alike"
+              ]
+            }
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "creatorName": {
+            "type": "string"
+          },
+          "creatorUrl": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "licenseCode": {
+            "type": "string"
+          },
+          "licenseLabel": {
+            "type": "string"
+          },
+          "sellable": {
+            "type": "boolean",
+            "description": "May be printed for sale today."
+          },
+          "stateReason": {
+            "type": "string",
+            "description": "Why not, or what to look at again; \"\" when all is well."
+          },
+          "recheckDue": {
+            "type": "boolean"
+          },
+          "checkedByName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "images",
+          "profiles",
+          "verdict",
+          "basis",
+          "membershipUntil",
+          "requires",
+          "checkedAt",
+          "createdAt",
+          "updatedAt",
+          "id",
+          "externalId",
+          "url",
+          "title",
+          "creatorName",
+          "creatorUrl",
+          "description",
+          "licenseCode",
+          "licenseLabel",
+          "sellable",
+          "stateReason",
+          "recheckDue",
+          "checkedByName"
+        ]
+      },
+      "LicenseCheckViewDto": {
+        "type": "object",
+        "properties": {
+          "verdict": {
+            "enum": [
+              "allowed",
+              "limited",
+              "blocked"
+            ],
+            "type": "string"
+          },
+          "basis": {
+            "enum": [
+              "license",
+              "membership",
+              "permission"
+            ],
+            "type": "string"
+          },
+          "membershipUntil": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "licenseCode": {
+            "type": "string"
+          },
+          "licenseLabel": {
+            "type": "string"
+          },
+          "evidenceKey": {
+            "type": "string",
+            "description": "Open with GET /uploads/download?key=…; \"\" when none was attached."
+          },
+          "note": {
+            "type": "string"
+          },
+          "acknowledgements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "checkedByName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "verdict",
+          "basis",
+          "membershipUntil",
+          "checkedAt",
+          "id",
+          "licenseCode",
+          "licenseLabel",
+          "evidenceKey",
+          "note",
+          "acknowledgements",
+          "checkedByName"
+        ]
+      },
+      "ExternalModelDetailDto": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "enum": [
+              "makerworld",
+              "printables",
+              "thingiverse"
+            ],
+            "type": "string"
+          },
+          "images": {
+            "description": "The cover first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelImageDto"
+            }
+          },
+          "profiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelProfileDto"
+            }
+          },
+          "verdict": {
+            "enum": [
+              "allowed",
+              "limited",
+              "blocked"
+            ],
+            "type": "string"
+          },
+          "basis": {
+            "enum": [
+              "license",
+              "membership",
+              "permission"
+            ],
+            "type": "string"
+          },
+          "membershipUntil": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "requires": {
+            "type": "array",
+            "description": "Conditions the shop keeps while selling (credit the creator…).",
+            "items": {
+              "type": "string",
+              "enum": [
+                "attribution",
+                "no_modification",
+                "share_alike"
+              ]
+            }
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "checks": {
+            "description": "Newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LicenseCheckViewDto"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "creatorName": {
+            "type": "string"
+          },
+          "creatorUrl": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "licenseCode": {
+            "type": "string"
+          },
+          "licenseLabel": {
+            "type": "string"
+          },
+          "sellable": {
+            "type": "boolean",
+            "description": "May be printed for sale today."
+          },
+          "stateReason": {
+            "type": "string",
+            "description": "Why not, or what to look at again; \"\" when all is well."
+          },
+          "recheckDue": {
+            "type": "boolean"
+          },
+          "checkedByName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "images",
+          "profiles",
+          "verdict",
+          "basis",
+          "membershipUntil",
+          "requires",
+          "checkedAt",
+          "createdAt",
+          "updatedAt",
+          "checks",
+          "id",
+          "externalId",
+          "url",
+          "title",
+          "creatorName",
+          "creatorUrl",
+          "description",
+          "licenseCode",
+          "licenseLabel",
+          "sellable",
+          "stateReason",
+          "recheckDue",
+          "checkedByName"
+        ]
+      },
+      "LicenseCheckInputDto": {
+        "type": "object",
+        "properties": {
+          "basis": {
+            "enum": [
+              "license",
+              "membership",
+              "permission"
+            ],
+            "type": "string"
+          },
+          "licenseCode": {
+            "type": "string",
+            "description": "A code of GET /external-models/licenses.",
+            "maxLength": 60
+          },
+          "acknowledgements": {
+            "type": "array",
+            "description": "The boxes ticked (keys of the licence rules: seen_on_source, attribution…).",
+            "maxItems": 10,
+            "items": {
+              "type": "string",
+              "enum": [
+                "attribution",
+                "membership_active",
+                "no_modification",
+                "permission_written",
+                "seen_on_source",
+                "share_alike"
+              ]
+            }
+          },
+          "membershipUntil": {
+            "type": "string",
+            "description": "YYYY-MM-DD, for a creator membership.",
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "evidenceKey": {
+            "type": "string",
+            "description": "Key from POST /uploads (purpose license-evidence).",
+            "maxLength": 300
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "basis",
+          "licenseCode",
+          "acknowledgements"
+        ]
+      },
+      "CreateExternalModelDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The model's page on MakerWorld, Printables or Thingiverse.",
+            "maxLength": 500
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "creatorName": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "creatorUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "^$|^https?:\\/\\/\\S+$"
+          },
+          "check": {
+            "$ref": "#/components/schemas/LicenseCheckInputDto"
+          },
+          "description": {
+            "type": "string",
+            "description": "Plain text; the admin turns the site's HTML into text first.",
+            "maxLength": 20000
+          },
+          "images": {
+            "description": "R2 keys from POST /uploads (purpose external-model-image), the cover first.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "profiles": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelProfileDto"
+            }
+          }
+        },
+        "required": [
+          "url",
+          "title",
+          "check"
+        ]
+      },
+      "UpdateExternalModelDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "creatorName": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "creatorUrl": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "^$|^https?:\\/\\/\\S+$"
+          },
+          "description": {
+            "type": "string",
+            "description": "Plain text; the admin turns the site's HTML into text first.",
+            "maxLength": 20000
+          },
+          "images": {
+            "description": "R2 keys from POST /uploads (purpose external-model-image), the cover first.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "profiles": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalModelProfileDto"
+            }
           }
         }
       },
