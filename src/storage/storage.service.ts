@@ -1,6 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
+  CopyObjectCommand,
   DeleteObjectCommand,
   GetObjectCommand,
   HeadObjectCommand,
@@ -141,6 +142,25 @@ export class StorageService {
       if ((error as { name?: string }).name === 'NotFound') return null;
       throw error;
     }
+  }
+
+  /**
+   * Moves an object to another key in the same bucket (both keys public/… or both private/…):
+   * R2 has no rename, so it is a copy then a delete.
+   */
+  async move(from: string, to: string) {
+    const bucket = this.bucketFor(from);
+    if (bucket !== this.bucketFor(to)) {
+      throw new Error(`Cannot move ${from} to another bucket (${to})`);
+    }
+    await this.s3().send(
+      new CopyObjectCommand({
+        Bucket: bucket,
+        CopySource: `${bucket}/${from.split('/').map(encodeURIComponent).join('/')}`,
+        Key: to,
+      }),
+    );
+    await this.remove(from);
   }
 
   async remove(key: string) {

@@ -391,12 +391,14 @@ model ExternalModel {
   externalId      String               @map("external_id")
   url             String
   title           String
+  /// Its R2 folder: public/external-models/<folder>/images/… and private/external-models/<folder>/{files,evidence}/….
+  folder          String               @default("")
   creatorName     String               @default("") @map("creator_name")
   creatorUrl      String               @default("") @map("creator_url")
   /// Plain text (the site's HTML is turned into text by the admin): never rendered as HTML.
   description     String               @default("")
   /// R2 keys of the photos (public/external-model-image/...), the first is the cover.
-  images          String[]
+  images          String[]             @default([])
   /// The site's print profiles: [{ name, minutes, grams, plates, printers }], see ExternalModelProfileDto.
   profiles        Json                 @default("[]")
   /// Copied from the latest check, so lists filter without reading the history.
@@ -407,7 +409,7 @@ model ExternalModel {
   checkedAt       DateTime             @map("checked_at") @db.Timestamptz(3)
   checks          ExternalModelCheck[]
   files           ExternalModelFile[]
-  createdAt      DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  createdAt       DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt       DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@unique([source, externalId])

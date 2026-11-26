@@ -31,13 +31,42 @@ const baseType = (contentType: string) =>
   contentType.split(';')[0].trim().toLowerCase();
 
 /**
+ * The folders a model from MakerWorld / Printables… keeps its files in once saved
+ * (external-models/<folder>/<kind>/<uuid>.<ext>), and the upload purpose each kind came from.
+ */
+export const MODEL_FOLDER_ROOT = 'external-models';
+export const MODEL_FOLDER_KINDS = {
+  evidence: 'license-evidence',
+  files: 'external-model-file',
+  images: 'external-model-image',
+} as const satisfies Record<string, UploadPurposeKey>;
+
+/**
  * Where a file goes:
  * - public/<purpose>/<yyyy>/<mm>/<uuid>.<ext>: product photos, avatars… readable by anyone;
  * - private/<purpose>/<userId>/<uuid>.<ext>: models, artwork, return photos… readable by their
- *   owner and by staff, through short-lived links.
+ *   owner and by staff, through short-lived links;
+ * - public|private/external-models/<folder>/<kind>/<uuid>.<ext>: one folder per outside model
+ *   (its photos in the public bucket, its print files and licence screenshots in the private
+ *   one), staff only for the private part.
  */
 export function parseKey(key: string) {
-  const [visibility, purpose, owner] = key.split('/');
+  const parts = key.split('/');
+  if (parts[1] === MODEL_FOLDER_ROOT) {
+    const [visibility, , folder, kind, name] = parts;
+    const purpose = MODEL_FOLDER_KINDS[kind as keyof typeof MODEL_FOLDER_KINDS];
+    if (
+      !purpose ||
+      !folder ||
+      !name ||
+      parts.length !== 5 ||
+      UPLOAD_PURPOSES[purpose].visibility !== visibility
+    ) {
+      return null;
+    }
+    return { owner: null, purpose, visibility } as const;
+  }
+  const [visibility, purpose, owner] = parts;
   const known = purpose in UPLOAD_PURPOSES;
   if (!known || (visibility !== 'public' && visibility !== 'private'))
     return null;
@@ -141,7 +170,10 @@ export class UploadsService {
     if (
       !parsed ||
       parsed.purpose !== purpose ||
-      (parsed.owner !== null && parsed.owner !== user.id && !isStaff(user))
+      // A private file is its uploader's; one with no owner (a model's folder) is staff's.
+      (parsed.visibility === 'private' &&
+        parsed.owner !== user.id &&
+        !isStaff(user))
     ) {
       throw badRequest('UPLOAD.INVALID_KEY', 'File đính kèm không hợp lệ.');
     }

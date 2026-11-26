@@ -18,6 +18,7 @@
     "supabase:stop": "npx --yes supabase@3.1.0 stop",
     "supabase:status": "npx --yes supabase@3.1.0 status",
     "auth:create-admin": "ts-node --transpile-only prisma/create-admin.ts",
+    "external-models:folders": "ts-node --transpile-only prisma/external-model-folders.ts",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,test}/**/*.ts\" --fix",
     "openapi": "nest build && node dist/openapi/export",

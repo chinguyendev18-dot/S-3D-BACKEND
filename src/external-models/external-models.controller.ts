@@ -118,6 +118,18 @@ export class ExternalModelsController {
     return this.models.update(user, id, dto, requestMeta(request));
   }
 
+  /** Removes the model, its history and print files, and their files in storage. */
+  @Delete(':id')
+  @RequirePermissions(MANAGE)
+  @ApiData(null)
+  remove(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+    @Req() request: Request,
+  ) {
+    return this.models.remove(user, id, requestMeta(request));
+  }
+
   /** Attach a print file (3MF, STL, STEP, zip…) uploaded with POST /uploads (external-model-file). */
   @Post(':id/files')
   @RequirePermissions(MANAGE)

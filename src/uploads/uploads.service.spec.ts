@@ -163,6 +163,25 @@ describe('UploadsService', () => {
       purpose: 'model',
       visibility: 'private',
     });
+    expect(
+      parseKey('private/external-models/makerworld-1-a/files/b.3mf'),
+    ).toEqual({
+      owner: null,
+      purpose: 'external-model-file',
+      visibility: 'private',
+    });
+    expect(
+      parseKey('public/external-models/makerworld-1-a/images/b.jpg'),
+    ).toEqual({
+      owner: null,
+      purpose: 'external-model-image',
+      visibility: 'public',
+    });
+    // A print file is never public, a kind must be known.
+    expect(
+      parseKey('public/external-models/makerworld-1-a/files/b.3mf'),
+    ).toBeNull();
+    expect(parseKey('private/external-models/x/other/b.3mf')).toBeNull();
     expect(parseKey('public/unknown/a.png')).toBeNull();
     expect(parseKey('secret/model/a.png')).toBeNull();
   });

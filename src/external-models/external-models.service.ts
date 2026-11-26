@@ -13,7 +13,7 @@ import type {
 } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { StorageService } from '../storage/storage.service';
-import { UploadsService } from '../uploads/uploads.service';
+import { MODEL_FOLDER_ROOT, UploadsService } from '../uploads/uploads.service';
 import type { DownloadLinkDto } from '../uploads/dto/upload.dto';
 import type {
   AddExternalModelFileDto,
@@ -47,6 +47,25 @@ const SORTABLE = ['checkedAt', 'createdAt', 'title'] as const;
 type Row = ExternalModel & {
   checks: Pick<ExternalModelCheck, 'checkedByName'>[];
 };
+
+/** What a model keeps in its folder, by kind (see parseKey in uploads.service.ts). */
+type FolderKind = 'evidence' | 'files' | 'images';
+
+/**
+ * A model's R2 folder: "makerworld-3637922-christmas-sweater-collection". The site and its id
+ * make it unique, the name makes it readable in the R2 dashboard.
+ */
+export function modelFolder(source: string, externalId: string, title: string) {
+  const slug = title
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/gi, 'd')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .slice(0, 50)
+    .replace(/^-+|-+$/g, '');
+  return [source, externalId, slug].filter(Boolean).join('-');
+}
 
 const extensionOf = (key: string) =>
   /.([a-z0-9]+)$/i.exec(key)?.[1]?.toLowerCase() ?? '';
@@ -204,8 +223,10 @@ export class ExternalModelsService {
       );
     }
     const creatorName = dto.creatorName?.trim() ?? '';
+    const folder = modelFolder(parsed.source, parsed.externalId, dto.title);
     const check = await this.evaluate(user, dto.check, creatorName);
-    const media = await this.media(user, dto, []);
+    const media = await this.media(user, dto, [], folder);
+    check.evidenceKey = await this.place(folder, 'evidence', check.evidenceKey);
     const now = new Date();
 
     const row = await this.prisma.externalModel.create({
@@ -216,6 +237,7 @@ export class ExternalModelsService {
         creatorName,
         creatorUrl: dto.creatorUrl?.trim() ?? '',
         externalId: parsed.externalId,
+        folder,
         source: parsed.source,
         title: dto.title.trim(),
         url: parsed.url,
@@ -243,6 +265,11 @@ export class ExternalModelsService {
     });
     if (!current) throw this.notFound();
     const check = await this.evaluate(user, dto, current.creatorName);
+    check.evidenceKey = await this.place(
+      this.folderOf(current),
+      'evidence',
+      check.evidenceKey,
+    );
     const now = new Date();
 
     await this.prisma.$transaction([
@@ -250,7 +277,10 @@ export class ExternalModelsService {
         data: { ...check, ...this.checker(user), checkedAt: now, modelId: id },
       }),
       this.prisma.externalModel.update({
-        data: this.latestFields(check, now),
+        data: {
+          ...this.latestFields(check, now),
+          folder: this.folderOf(current),
+        },
         where: { id },
       }),
     ]);
@@ -298,10 +328,12 @@ export class ExternalModelsService {
         'Giấy phép của mẫu cần ghi tên tác giả: không để trống tên tác giả.',
       );
     }
-    const media = await this.media(user, dto, current.images);
+    const folder = this.folderOf(current);
+    const media = await this.media(user, dto, current.images, folder);
     const row = await this.prisma.externalModel.update({
       data: {
         ...media,
+        folder,
         creatorName: dto.creatorName,
         creatorUrl: dto.creatorUrl,
         title: dto.title,
@@ -315,7 +347,45 @@ export class ExternalModelsService {
       row,
       `Sửa thông tin mẫu ngoài “${row.title}”`,
     );
+    if (media.images) {
+      const kept = new Set(media.images);
+      await Promise.all(
+        current.images
+          .filter((key) => !kept.has(key) && key.startsWith('public/'))
+          .map((key) => this.removeStored(key)),
+      );
+    }
     return this.get(id);
+  }
+
+  /**
+   * Removes the model with its checks and print files, then their photos, screenshots and files
+   * from storage. The audit log keeps who removed it and when.
+   */
+  async remove(user: AuthUser, id: string, meta: RequestMeta) {
+    const row = await this.prisma.externalModel.findUnique({
+      include: {
+        checks: { select: { evidenceKey: true } },
+        files: { select: { key: true } },
+      },
+      where: { id },
+    });
+    if (!row) throw this.notFound();
+    await this.prisma.externalModel.delete({ where: { id } });
+    const keys = [
+      ...row.images.filter((key) => key.startsWith('public/')),
+      ...row.files.map((file) => file.key),
+      ...row.checks.map((check) => check.evidenceKey).filter(Boolean),
+    ];
+    await Promise.all(keys.map((key) => this.removeStored(key)));
+    await this.record(
+      user,
+      meta,
+      'external_model.deleted',
+      row,
+      `Xoá mẫu ngoài “${row.title}” (${row.files.length} tệp in, ${row.checks.length} lần kiểm tra)`,
+    );
+    return null;
   }
 
   /** Attaches a print file the person uploaded (POST /uploads, purpose external-model-file). */
@@ -325,10 +395,7 @@ export class ExternalModelsService {
     dto: AddExternalModelFileDto,
     meta: RequestMeta,
   ) {
-    const model = await this.prisma.externalModel.findUnique({
-      select: { id: true, title: true },
-      where: { id },
-    });
+    const model = await this.prisma.externalModel.findUnique({ where: { id } });
     if (!model) throw this.notFound();
     const object = await this.uploads.assertUploaded(
       user,
@@ -345,11 +412,19 @@ export class ExternalModelsService {
         'Tệp này đã được gắn vào một mẫu.',
       );
     }
+    const folder = this.folderOf(model);
+    const key = await this.place(folder, 'files', dto.key);
+    if (!model.folder) {
+      await this.prisma.externalModel.update({
+        data: { folder },
+        where: { id },
+      });
+    }
     const file = await this.prisma.externalModelFile.create({
       data: {
         fileName: dto.fileName,
-        format: extensionOf(dto.key),
-        key: dto.key,
+        format: extensionOf(key),
+        key,
         modelId: id,
         note: dto.note ?? '',
         profileName: dto.profileName ?? '',
@@ -377,10 +452,7 @@ export class ExternalModelsService {
   ) {
     const file = await this.findFile(id, fileId);
     await this.prisma.externalModelFile.delete({ where: { id: file.id } });
-    // The row is what the app reads; a file left in R2 only costs storage, so a failure here is logged.
-    await this.storage.remove(file.key).catch((error: unknown) => {
-      this.logger.warn(`Could not delete ${file.key}: ${String(error)}`);
-    });
+    await this.removeStored(file.key);
     await this.record(
       user,
       meta,
@@ -395,6 +467,85 @@ export class ExternalModelsService {
   async fileLink(id: string, fileId: string): Promise<DownloadLinkDto> {
     const file = await this.findFile(id, fileId);
     return this.storage.signDownload(file.key, file.fileName);
+  }
+
+  private folderOf(model: ExternalModel) {
+    return (
+      model.folder || modelFolder(model.source, model.externalId, model.title)
+    );
+  }
+
+  /**
+   * Moves an uploaded file into the model's folder (same bucket: photos stay public, print files
+   * and screenshots private) and gives its new key; a key already there, or "", stays as it is.
+   */
+  private async place(folder: string, kind: FolderKind, key: string) {
+    if (!key) return key;
+    const [visibility] = key.split('/');
+    const home = `${visibility}/${MODEL_FOLDER_ROOT}/${folder}/${kind}/`;
+    if (key.startsWith(home)) return key;
+    const target = home + key.split('/').pop();
+    await this.storage.move(key, target);
+    return target;
+  }
+
+  /**
+   * Files saved before models had folders, moved into them (npm run external-models:folders).
+   * Each move is saved at once, so a run stopped halfway can simply be run again. A licence
+   * screenshot only changes place: the picture itself, the proof, stays as it was.
+   */
+  async moveIntoFolders() {
+    const rows = await this.prisma.externalModel.findMany({
+      include: { checks: true, files: true },
+    });
+    let moved = 0;
+    for (const row of rows) {
+      const folder = this.folderOf(row);
+      const images = [...row.images];
+      for (const [index, key] of row.images.entries()) {
+        if (!key.startsWith('public/')) continue;
+        const next = await this.place(folder, 'images', key);
+        if (next === key) continue;
+        images[index] = next;
+        moved += 1;
+        await this.prisma.externalModel.update({
+          data: { images },
+          where: { id: row.id },
+        });
+      }
+      if (!row.folder) {
+        await this.prisma.externalModel.update({
+          data: { folder },
+          where: { id: row.id },
+        });
+      }
+      for (const check of row.checks) {
+        const next = await this.place(folder, 'evidence', check.evidenceKey);
+        if (next === check.evidenceKey) continue;
+        moved += 1;
+        await this.prisma.externalModelCheck.update({
+          data: { evidenceKey: next },
+          where: { id: check.id },
+        });
+      }
+      for (const file of row.files) {
+        const next = await this.place(folder, 'files', file.key);
+        if (next === file.key) continue;
+        moved += 1;
+        await this.prisma.externalModelFile.update({
+          data: { key: next },
+          where: { id: file.id },
+        });
+      }
+    }
+    return { models: rows.length, moved };
+  }
+
+  /** The row is what the app reads; a file left in R2 only costs storage, so a failure is logged. */
+  private removeStored(key: string) {
+    return this.storage.remove(key).catch((error: unknown) => {
+      this.logger.warn(`Could not delete ${key}: ${String(error)}`);
+    });
   }
 
   private async findFile(id: string, fileId: string) {
@@ -416,6 +567,7 @@ export class ExternalModelsService {
     user: AuthUser,
     dto: ExternalModelMediaDto,
     saved: string[],
+    folder: string,
   ) {
     const data: {
       description?: string;
@@ -431,7 +583,13 @@ export class ExternalModelsService {
           await this.uploads.assertUploaded(user, key, 'external-model-image');
         }
       }
-      data.images = images;
+      const placed: string[] = [];
+      for (const key of images) {
+        placed.push(
+          saved.includes(key) ? key : await this.place(folder, 'images', key),
+        );
+      }
+      data.images = placed;
     }
     if (dto.profiles !== undefined) {
       data.profiles = dto.profiles.map((profile) => ({
